@@ -1390,8 +1390,7 @@
 
                         if (decrypted) {
                             datosFichaCompleta = decrypted;
-                            sessionStorage.setItem('dashboard_access', 'true');
-                            sessionStorage.setItem('dashboard_key', input);
+                            // Eliminamos setItem para que nunca se guarde la sesión
                             unlockDashboard();
                         } else {
                             throw new Error("Clave válida pero error al descifrar. ¿Archivo corrupto?");
@@ -1424,7 +1423,8 @@
 
         window.addEventListener('DOMContentLoaded', async () => {
             initTheme();
-            console.log("🚀 Dashboard cargado. Verificando datos...");
+            console.log("🚀 DASHBOARD VERSION: 10:35 AM - Seguridad Máxima - Sin Auto-login");
+            console.log("Verificando datos...");
 
             if (typeof datosFichaEncrypted === 'undefined') {
                 console.error("❌ El archivo de datos no se cargó correctamente.");
