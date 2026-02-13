@@ -1,0 +1,23 @@
+# Datos pesados (No subir a Git)
+*.csv
+*.xlsx
+*.rds
+data/
+datos/datos_originales/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.env
+.venv
+env/
+venv/
+ENV/
+
+# Archivos de sistema
+.DS_Store
+Thumbs.db
+
+# Datos generados (Opcional - Se recomienda subir el JS cifrado, pero ignorar los crudos)
+# Si deseas que los datos JS se suban, no los incluyas aquí.

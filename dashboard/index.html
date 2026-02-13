@@ -1,0 +1,2643 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ficha Técnica Empresarial - Colsubsidio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --primary: #0033A0;
+            --secondary: #00A1E4;
+            --accent: #FFD100;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --bg: #F8FAFC;
+            --card-bg: #FFFFFF;
+            --text-main: #1E293B;
+            --text-muted: #64748B;
+            --border: #E2E8F0;
+            --shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+            --gradient: linear-gradient(135deg, #0033A0 0%, #00A1E4 100%);
+        }
+
+        /* Dark Mode Variables */
+        [data-theme="dark"] {
+            --bg: #0f172a;
+            --card-bg: #1e293b;
+            --text-main: #f1f5f9;
+            --text-muted: #94a3b8;
+            --border: #334155;
+            --shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            --gradient: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+        }
+
+        /* Animaciones */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.5;
+            }
+        }
+
+        @keyframes spin {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .fade-in {
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--bg);
+            color: var(--text-main);
+            line-height: 1.5;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        header {
+            background: var(--gradient);
+            padding: 1.5rem;
+            color: white;
+            text-align: center;
+            box-shadow: var(--shadow);
+            position: relative;
+        }
+
+        /* Dark Mode Toggle */
+        .theme-toggle {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 2rem;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.05);
+        }
+
+        .theme-toggle-icon {
+            font-size: 1.2rem;
+        }
+
+        header h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 0.3rem;
+        }
+
+        .container {
+            max-width: 98%;
+            margin: 1rem auto;
+            padding: 0 1.5rem;
+        }
+
+        /* Sección de Búsqueda */
+        .search-section {
+            background: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            box-shadow: var(--shadow);
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        /* Navegación por Pestañas */
+        .nav-tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            background: var(--card-bg);
+            padding: 0.5rem;
+            border-radius: 0.75rem;
+            box-shadow: var(--shadow);
+        }
+
+        .nav-tab {
+            flex: 1;
+            padding: 0.75rem;
+            text-align: center;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            color: var(--text-muted);
+            border: 1px solid transparent;
+        }
+
+        .nav-tab.active {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 4px 12px rgba(0, 51, 160, 0.2);
+        }
+
+        .nav-tab:not(.active):hover {
+            background: var(--bg);
+            color: var(--primary);
+        }
+
+        /* Comparador UI */
+        .comparator-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        @media (max-width: 1024px) {
+            .comparator-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .benchmark-selectors {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .bench-option {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .bench-option.active {
+            border-color: var(--secondary);
+            background: rgba(0, 161, 228, 0.05);
+            color: var(--secondary);
+        }
+
+        .comparison-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--border);
+        }
+
+        .comparison-col-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .gap-indicator {
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 0.1rem 0.4rem;
+            border-radius: 0.3rem;
+            margin-left: 0.5rem;
+        }
+
+        .gap-positive {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--success);
+        }
+
+        .gap-negative {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--danger);
+        }
+
+        /* Comparador Dual */
+        .comp-mode-tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 0.5rem;
+        }
+
+        .comp-mode-tab {
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            border-radius: 0.5rem;
+            transition: all 0.2s;
+        }
+
+        .comp-mode-tab.active {
+            color: var(--primary);
+            background: rgba(0, 51, 160, 0.05);
+        }
+
+        .dual-search-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        @media (max-width: 768px) {
+            .dual-search-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Segment Comparison Deep Dive */
+        .segment-comp-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .seg-comp-card {
+            background: var(--card-bg);
+            border-radius: 1rem;
+            padding: 1.2rem;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+            transition: transform 0.2s;
+        }
+
+        .seg-comp-card:hover {
+            transform: translateY(-4px);
+        }
+
+        .seg-comp-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--bg);
+        }
+
+        .seg-comp-title {
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: #0891b2;
+        }
+
+        .seg-comp-metric-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .seg-comp-val-box {
+            padding: 0.6rem;
+            border-radius: 0.5rem;
+            background: var(--bg);
+            text-align: center;
+        }
+
+        .seg-comp-val {
+            font-size: 1.1rem;
+            font-weight: 700;
+            display: block;
+        }
+
+        .seg-comp-lab {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+
+        .search-section input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid var(--border);
+            border-radius: 0.5rem;
+            font-family: inherit;
+            font-size: 1rem;
+        }
+
+        .search-section input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        /* Ficha Fija de Empresa */
+        .company-profile {
+            background: var(--card-bg);
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+        }
+
+        .company-header {
+            background: var(--gradient);
+            color: white;
+            padding: 1rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .company-header-left h2 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+            text-transform: uppercase;
+        }
+
+        .company-badges {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .badge {
+            padding: 0.15rem 0.6rem;
+            border-radius: 0.5rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .company-metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 0.75rem;
+            padding: 1rem;
+            background: var(--card-bg);
+        }
+
+        .metric-card {
+            text-align: center;
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            background: var(--bg);
+            border: 1px solid transparent;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .metric-card:hover {
+            border-color: var(--secondary);
+            background: var(--card-bg);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
+            transform: translateY(-4px);
+        }
+
+        .metric-card .value {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--primary);
+            line-height: 1.2;
+        }
+
+        .metric-card .label {
+            font-size: 0.65rem;
+            color: var(--text-muted);
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-top: 0.2rem;
+        }
+
+        .metric-card .percentage {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            margin-top: 0.1rem;
+        }
+
+        /* Resumen UE integrado en el perfil */
+        .ue-summary-integrated {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 0.75rem;
+            padding: 0 1rem 1rem 1rem;
+            background: var(--card-bg);
+            border-top: 1px solid var(--border);
+        }
+
+        .ue-mini-card {
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            background: var(--bg);
+            border-left: 3px solid var(--primary);
+        }
+
+        .ue-mini-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .ue-mini-title {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .ue-mini-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.5rem;
+        }
+
+        .ue-stat-box {
+            font-size: 0.7rem;
+        }
+
+        .ue-stat-val {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        /* Sección de Análisis por Segmento */
+        .analysis-section {
+            margin-top: 2rem;
+        }
+
+        .section-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--border);
+        }
+
+        .ue-tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .ue-tab {
+            padding: 0.5rem 1rem;
+            border: none;
+            background: var(--card-bg);
+            color: var(--text-muted);
+            font-weight: 600;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .ue-tab:hover {
+            background: var(--bg);
+        }
+
+        .ue-tab.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Cards de Cobertura por Segmento */
+        .segment-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .segment-card {
+            background: var(--card-bg);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            border: 1px solid var(--border);
+        }
+
+        .segment-card:hover {
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            transform: translateY(-5px);
+            border-color: var(--secondary);
+        }
+
+        .segment-card h3 {
+            font-size: 1.1rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .coverage-stat {
+            margin-bottom: 1rem;
+        }
+
+        .coverage-stat .main-stat {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--success);
+        }
+
+        .coverage-stat .detail {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-top: 0.25rem;
+        }
+
+        .comparison-bar {
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .comparison-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .comparison-item .label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .comparison-item .value {
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        /* Charts */
+        .chart-container {
+            background: var(--card-bg);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .chart-container h3 {
+            font-size: 1rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .chart-wrapper {
+            height: 300px;
+            position: relative;
+        }
+
+        /* Loading */
+        #loading {
+            text-align: center;
+            padding: 3rem;
+            font-size: 1.2rem;
+            color: var(--text-muted);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* Nuevas Secciones de Perfil */
+        .profile-grid-extended {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+            padding: 0 1rem 1rem 1rem;
+            background: white;
+        }
+
+        .extended-metric-card {
+            background: #f8fafc;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            border: 1px solid #e2e8f0;
+        }
+
+        .extended-metric-card h4 {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-transform: uppercase;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .mini-bar-row {
+            margin-bottom: 0.5rem;
+        }
+
+        .mini-bar-label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.75rem;
+            margin-bottom: 0.2rem;
+        }
+
+        .mini-bar-bg {
+            height: 6px;
+            background: #e2e8f0;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .mini-bar-fill {
+            height: 100%;
+            background: var(--secondary);
+            border-radius: 3px;
+        }
+
+        /* Badge Styles */
+        .badge {
+            display: inline-block;
+            padding: 0.2rem 0.4rem;
+            border-radius: 0.4rem;
+            font-size: 0.6rem;
+            font-weight: 700;
+            color: white;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+            letter-spacing: 0.02em;
+        }
+
+        /* Help Info Styles */
+        .info-trigger {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 16px;
+            height: 16px;
+            background: #e2e8f0;
+            color: #64748b;
+            border-radius: 50%;
+            font-size: 10px;
+            cursor: pointer;
+            margin-left: 4px;
+            font-weight: bold;
+            transition: all 0.2s;
+        }
+
+        .info-trigger:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .tooltip-box {
+            position: absolute;
+            background: #1e293b;
+            color: white;
+            padding: 0.8rem;
+            border-radius: 0.5rem;
+            font-size: 0.75rem;
+            width: 220px;
+            z-index: 1000;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            display: none;
+            line-height: 1.4;
+            pointer-events: none;
+        }
+
+        .info-trigger:hover+.tooltip-box {
+            display: block;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 2rem;
+            border-radius: 1rem;
+            width: 80%;
+            max-width: 800px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+            max-height: 85vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #e2e8f0;
+            padding-bottom: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .close-modal {
+            font-size: 1.5rem;
+            font-weight: bold;
+            cursor: pointer;
+            color: #64748b;
+        }
+
+        .methodology-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .method-card {
+            background: #f8fafc;
+            padding: 1.2rem;
+            border-radius: 0.5rem;
+            border-left: 4px solid var(--primary);
+        }
+
+        .method-card h5 {
+            margin: 0 0 0.5rem 0;
+            color: var(--primary);
+            font-size: 0.9rem;
+        }
+
+        .formula-box {
+            background: #0f172a;
+            color: #38bdf8;
+            padding: 0.5rem;
+            border-radius: 0.3rem;
+            font-family: monospace;
+            font-size: 0.75rem;
+            margin: 0.5rem 0;
+            border: 1px solid #1e293b;
+        }
+
+        /* Pantalla de Login */
+        #login-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            color: white;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .login-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(12px);
+            padding: 2.5rem;
+            border-radius: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            animation: fadeInScale 0.4s ease-out;
+        }
+
+        @keyframes fadeInScale {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .login-card h1 {
+            font-size: 1.6rem;
+            margin-bottom: 0.5rem;
+            font-weight: 800;
+            letter-spacing: -0.025em;
+        }
+
+        .login-card p {
+            color: #94a3b8;
+            font-size: 0.875rem;
+            margin-bottom: 2rem;
+            line-height: 1.5;
+        }
+
+        .login-input {
+            width: 100%;
+            padding: 1rem;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 1rem;
+            color: white;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            outline: none;
+            transition: all 0.3s;
+            text-align: center;
+            letter-spacing: 0.1em;
+        }
+
+        .login-input:focus {
+            border-color: #3b82f6;
+            background: rgba(0, 0, 0, 0.4);
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
+        }
+
+        .login-button {
+            width: 100%;
+            padding: 1rem;
+            background: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 1rem;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .login-button:hover {
+            background: #1d4ed8;
+            transform: translateY(-1px);
+            box-shadow: 0 10px 15px -3px rgba(37, 99, 235, 0.3);
+        }
+
+        .login-button:active {
+            transform: translateY(0);
+        }
+
+        .login-error {
+            color: #f87171;
+            font-size: 0.8rem;
+            margin-top: 1.25rem;
+            display: none;
+            font-weight: 600;
+            padding: 0.5rem;
+            background: rgba(239, 68, 68, 0.1);
+            border-radius: 0.5rem;
+        }
+
+        .locked {
+            display: none !important;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Pantalla de Login -->
+    <div id="login-screen">
+        <div class="login-card">
+            <div
+                style="font-size: 3.5rem; margin-bottom: 1.5rem; filter: drop-shadow(0 0 10px rgba(59, 130, 246, 0.5));">
+                🛡️</div>
+            <h1>Dashboard Corporativo</h1>
+            <p>Acceso restringido. Por favor ingresa la clave de seguridad para continuar.</p>
+            <input type="password" id="password-input" class="login-input" placeholder="••••••••" autofocus>
+            <button onclick="checkPassword()" class="login-button">Ver Dashboard</button>
+            <div id="login-error" class="login-error">🔑 Clave incorrecta. Reintenta.</div>
+        </div>
+    </div>
+    <header>
+        <button class="theme-toggle" onclick="toggleTheme()" id="theme-toggle">
+            <span class="theme-toggle-icon" id="theme-icon">🌙</span>
+            <span id="theme-text">Modo Oscuro</span>
+        </button>
+        <h1>📊 Ficha Técnica Empresarial</h1>
+        <p>Análisis Completo de Cobertura por Segmento Poblacional</p>
+    </header>
+
+    <div id="loading">Cargando datos...</div>
+
+    <div class="container locked" id="main-content">
+        <!-- Navegación Principal -->
+        <div class="nav-tabs">
+            <div class="nav-tab active" data-view="ficha" onclick="switchView('ficha')">🪪 Ficha Técnica</div>
+            <div class="nav-tab" data-view="comparator" onclick="switchView('comparator')">⚖️ Comparador Benchmarking
+            </div>
+        </div>
+
+        <!-- VISTA 1: FICHA TÉCNICA -->
+        <div id="view-main">
+            <!-- Búsqueda de Empresa -->
+            <div class="search-section">
+                <input type="text" id="company-search" placeholder="🔍 Buscar empresa por nombre o NIT..."
+                    list="company-list">
+                <datalist id="company-list"></datalist>
+            </div>
+
+            <!-- Ficha Fija de Empresa -->
+            <div class="company-profile hidden" id="company-profile">
+                <div class="company-header">
+                    <div class="company-header-left">
+                        <h2 id="company-name">Seleccione una empresa</h2>
+                        <div id="company-predominant"
+                            style="font-size: 0.85rem; font-weight: 600; color: var(--accent); margin-bottom: 0.5rem; display: none;">
+                            🏆 Segmento Predominante: <span id="predominant-value">-</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 1rem;">
+                            <div class="company-badges" id="company-badges"></div>
+                        </div>
+                    </div>
+                    <div style="text-align: right;">
+                        <div style="font-size: 0.8rem; font-weight: 600; opacity: 0.9;">
+                            FICHA EMPRESARIAL 2025
+                        </div>
+                        <button onclick="openModal()"
+                            style="font-size: 0.7rem; color: white; font-weight: 600; background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3); padding: 0.3rem 0.8rem; border-radius: 0.5rem; cursor: pointer; margin-top: 0.4rem;">
+                            ❓ Metodología
+                        </button>
+                    </div>
+                </div>
+                <!-- Metodología Modal -->
+                <div id="methodologyModal" class="modal">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3 style="margin:0">📖 Metodología y Criterios de Cálculo</h3>
+                            <span class="close-modal" onclick="closeModal()">&times;</span>
+                        </div>
+                        <div class="methodology-grid">
+                            <div class="method-card">
+                                <h5>📊 Cobertura Sistémica (Ponderada)</h5>
+                                <p style="font-size: 0.8rem; line-height: 1.4;">La referencia no es un solo grupo, sino
+                                    una
+                                    combinación equilibrada de tres estándares:</p>
+                                <ul style="font-size: 0.75rem; color: #64748b; padding-left: 1rem; margin-top: 0.5rem;">
+                                    <li><strong>50% Cluster:</strong> Tu mercado directo.</li>
+                                    <li><strong>30% Foco:</strong> Empresas de alto interés.</li>
+                                    <li><strong>20% Grandes:</strong> Estándar de madurez.</li>
+                                </ul>
+                            </div>
+                            <div class="method-card">
+                                <h5>📈 Índice de Salud (Health)</h5>
+                                <p style="font-size: 0.8rem; line-height: 1.4;">Evalúa tu penetración frente al Promedio
+                                    Sistémico del ecosistema.</p>
+                                <div class="formula-box">Health = (Cob. Empresa / Cob. Ponderada) * 100</div>
+                            </div>
+                            <div class="method-card">
+                                <h5>⚖️ Coeficiente de Concentración</h5>
+                                <p style="font-size: 0.8rem; line-height: 1.4;">Evalúa la dependencia interna comparando
+                                    tu
+                                    peso de segmento vs el peso ponderado del sector.</p>
+                                <div class="formula-box">Concentración = Peso Empresa / Peso Ponderado</div>
+                            </div>
+                            <div class="method-card">
+                                <h5>👥 Grupos de Referencia</h5>
+                                <p style="font-size: 0.8rem; line-height: 1.4;">Esta metodología evita sesgos al
+                                    comparar
+                                    contra competidores directos y también contra empresas de excelencia (Foco).</p>
+                            </div>
+                            <div class="method-card" style="background: #eff6ff; border: 1px solid #dbeafe;">
+                                <h5>🎯 Meta de Volumen (Ref)</h5>
+                                <p style="font-size: 0.8rem; line-height: 1.4;">Es el volumen objetivo que alcanzaría tu
+                                    empresa si tuviera exactamente el mismo nivel de éxito que el mercado.</p>
+                                <div class="formula-box">Meta = (Tus Afiliados) x (% Cobertura Mercado)</div>
+                            </div>
+                        </div>
+                        <div style="margin-top: 1.5rem; font-size: 0.7rem; color: #94a3b8; font-style: italic;">
+                            * Los datos corresponden al procesamiento masivo de 1.9M de registros de afiliados activos a
+                            2025.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="company-metrics" id="company-metrics"></div>
+                <div class="profile-grid-extended" id="profile-grid-extended"></div>
+                <div class="ue-summary-integrated" id="ue-summary-integrated"></div>
+            </div>
+
+            <!-- Análisis por Segmento -->
+            <div class="analysis-section hidden" id="analysis-section">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                    <h2 class="section-title" style="margin: 0;">📊 Análisis de Cobertura por Unidad de Negocio</h2>
+                    <button id="btn-toggle-metodologia"
+                        onclick="toggleAnalysisPanel('metodologia-content', 'btn-toggle-metodologia')"
+                        style="padding: 0.5rem 1rem; background: var(--secondary); color: white; border: none; border-radius: 0.5rem; font-size: 0.8rem; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
+                        <span>📖</span> Ver Explicación ▾
+                    </button>
+                </div>
+
+                <!-- Leyenda Explicativa Detallada (Colapsable) -->
+                <div id="metodologia-content" class="hidden"
+                    style="background: var(--card-bg); border-radius: 0.75rem; padding: 1.25rem; margin-bottom: 2rem; border-left: 5px solid var(--secondary); box-shadow: var(--shadow);">
+                    <h4
+                        style="margin: 0 0 1rem 0; color: var(--primary); font-size: 1.1rem; display: flex; align-items: center; gap: 0.6rem;">
+                        📖 Guía de Metodología y Benchmarking Sistémico
+                    </h4>
+
+                    <div
+                        style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem; font-size: 0.85rem;">
+                        <!-- Columna 1: Salud -->
+                        <div>
+                            <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.6rem;">
+                                <span style="font-size: 1.2rem;">🎯</span>
+                                <strong style="color: var(--text-main); font-size: 0.95rem;">Salud del Segmento
+                                    (Cobertura)</strong>
+                            </div>
+                            <p style="color: var(--text-muted); margin-bottom: 0.5rem;">Mide qué tan efectiva es la
+                                empresa captando usuarios en cada nicho.</p>
+                            <div
+                                style="background: #f1f5f9; padding: 0.5rem; border-radius: 0.4rem; font-family: monospace; font-size: 0.75rem;">
+                                Meta = Afiliados Empresa * % Penetración Mercado
+                            </div>
+                            <p style="font-size: 0.75rem; margin-top: 0.4rem; color: #64748b;"><i>La meta ajusta el
+                                    volumen del mercado a tu tamaño real para que la comparación sea justa.</i></p>
+                        </div>
+                        <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.8rem;">
+                            <span
+                                style="background: var(--success); color: white; padding: 0.2rem 0.6rem; border-radius: 0.4rem; font-size: 0.75rem; font-weight: 700;">Óptima</span>
+                            <span
+                                style="background: #64748B; color: white; padding: 0.2rem 0.6rem; border-radius: 0.4rem; font-size: 0.75rem; font-weight: 700;">Estable</span>
+                            <span
+                                style="background: var(--danger); color: white; padding: 0.2rem 0.6rem; border-radius: 0.4rem; font-size: 0.75rem; font-weight: 700;">Crítica</span>
+                        </div>
+                        <p style="color: var(--text-muted); line-height: 1.4;">
+                            Mide qué tan bien estás frente al mercado. Se compara tu uso real contra el
+                            <strong>Promedio del Grupo</strong> (la mezcla de Cluster, Foco y Grandes).
+                        </p>
+                    </div>
+
+                    <!-- Columna 2: Especialización -->
+                    <div>
+                        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.8rem;">
+                            <span style="font-size: 1.2rem;">⚖️</span>
+                            <strong style="color: var(--text-main); font-size: 0.95rem;">Especialización (¿Cuál es
+                                tu fuerte?)</strong>
+                        </div>
+                        <div style="margin-top: 0.3rem; display: flex; flex-direction: column; gap: 0.6rem;">
+                            <div>
+                                <span
+                                    style="background: var(--danger); color: white; padding: 0.15rem 0.5rem; border-radius: 0.3rem; font-size: 0.7rem; font-weight: 700;">Concentrado</span>
+                                <span
+                                    style="color: var(--text-muted); font-size: 0.75rem; display: block; margin-top: 0.2rem;">
+                                    <strong>Eres experto aquí.</strong> Este grupo es mucho más importante para ti
+                                    que para los demás. Es tu principal fuente de clientes.
+                                </span>
+                            </div>
+                            <div>
+                                <span
+                                    style="background: var(--text-muted); color: white; padding: 0.15rem 0.5rem; border-radius: 0.3rem; font-size: 0.7rem; font-weight: 700;">Equilibrado</span>
+                                <span
+                                    style="color: var(--text-muted); font-size: 0.75rem; display: block; margin-top: 0.2rem;">
+                                    <strong>Estás igual que todos.</strong> Tu mezcla de clientes es la normal del
+                                    mercado. No eres ni más ni menos experto que el resto.
+                                </span>
+                            </div>
+                            <div>
+                                <span
+                                    style="background: var(--warning); color: white; padding: 0.15rem 0.5rem; border-radius: 0.3rem; font-size: 0.7rem; font-weight: 700;">Nicho
+                                    Pequeño</span>
+                                <span
+                                    style="color: var(--text-muted); font-size: 0.75rem; display: block; margin-top: 0.2rem;">
+                                    <strong>Tienes pocos.</strong> Este grupo casi no usa tu servicio comparado con
+                                    lo que es normal en otras empresas.
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Columna 3: Benchmarking -->
+                    <div>
+                        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.6rem;">
+                            <span style="font-size: 1.2rem;">🤖</span>
+                            <strong style="color: var(--text-main); font-size: 0.95rem;">¿Contra quién me
+                                mido?</strong>
+                        </div>
+                        <p
+                            style="color: var(--text-muted); line-height: 1.4; background: var(--bg); padding: 0.8rem; border-radius: 0.5rem; border: 1px dashed var(--border);">
+                            <span style="display: block; margin-bottom: 0.3rem;">📊 <strong>Tu nota final se compara
+                                    contra:</strong></span>
+                            <strong>50% Sector:</strong> Empresas que se parecen a ti.<br>
+                            <strong>30% Foco:</strong> Empresas que te interesa vigilar.<br>
+                            <strong>20% Grandes:</strong> Las empresas más grandes del país.
+                        </p>
+                    </div>
+                </div>
+
+
+                <!-- Tabs de Segmento (Pivote) -->
+                <div class="ue-tabs" style="margin-top: 1.5rem; flex-wrap: wrap; gap: 0.5rem;">
+                    <div id="segment-tabs-buttons" style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+                        <button class="ue-tab seg-tab" data-seg="Básico" onclick="setSegment('Básico')">Básico</button>
+                        <button class="ue-tab seg-tab" data-seg="Medio" onclick="setSegment('Medio')">Medio</button>
+                        <button class="ue-tab seg-tab" data-seg="Joven" onclick="setSegment('Joven')">Joven</button>
+                        <button class="ue-tab seg-tab" data-seg="Alto" onclick="setSegment('Alto')">Alto</button>
+                    </div>
+                </div>
+
+                <!-- Grid de Segmentos -->
+                <div class="segment-grid" id="segment-grid"></div>
+
+                <!-- Detalles Tácticos por UE (Top 10) -->
+                <div id="ue-detailed-breakdown" class="hidden"
+                    style="margin-top: 2rem; background: var(--card-bg); border-radius: 0.75rem; padding: 1.5rem; border: 1px solid var(--border); box-shadow: var(--shadow);">
+                    <h3 id="ue-detail-title"
+                        style="margin-top: 0; color: var(--primary); font-size: 1.1rem; border-bottom: 2px solid var(--secondary); padding-bottom: 0.5rem; margin-bottom: 1.25rem; display: flex; align-items: center; gap: 0.6rem;">
+                        📊 Top 10 Detalle Táctico
+                    </h3>
+                    <div class="table-container" style="overflow-x: auto;">
+                        <table style="width: 100%; border-collapse: collapse; font-size: 0.85rem; min-width: 500px;">
+                            <thead>
+                                <tr style="background: var(--bg); border-bottom: 2px solid var(--border);">
+                                    <th id="ue-detail-col-name"
+                                        style="text-align: left; padding: 0.75rem; color: var(--text-main); font-weight: 700;">
+                                        Sede/Proyecto</th>
+                                    <th
+                                        style="text-align: center; padding: 0.75rem; color: var(--text-muted); font-weight: 700;">
+                                        Pers. 2024</th>
+                                    <th
+                                        style="text-align: center; padding: 0.75rem; color: var(--primary); font-weight: 700;">
+                                        Pers. 2025</th>
+                                    <th
+                                        style="text-align: center; padding: 0.75rem; color: var(--text-main); font-weight: 700;">
+                                        Var %</th>
+                                </tr>
+                            </thead>
+                            <tbody id="ue-detail-body">
+                                <!-- Se poblará dinámicamente -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <div
+                        style="margin-top: 1rem; font-size: 0.75rem; color: var(--text-muted); font-style: italic; display: flex; align-items: center; gap: 0.4rem;">
+                        <span>ℹ️</span> Cifras basadas en personas únicas por año en el punto de atención.
+                    </div>
+                </div>
+                <!-- Análisis de Radar removido por solicitud del usuario -->
+            </div>
+        </div> <!-- Fin de #view-main -->
+
+        <!-- VISTA 2: COMPARADOR -->
+        <div id="view-comparator" class="hidden">
+            <div class="search-section" style="margin-bottom: 1rem;">
+                <div class="comp-mode-tabs">
+                    <div class="comp-mode-tab active" id="mode-bench-tab" onclick="setComparatorMode('BENCHMARK')">📊 vs
+                        Benchmarks</div>
+                    <div class="comp-mode-tab" id="mode-company-tab" onclick="setComparatorMode('COMPANY')">🏢 vs Otra
+                        Empresa</div>
+                </div>
+
+                <div id="bench-selectors-container">
+                    <h3 style="margin-bottom: 1rem; color: var(--primary); font-size: 1rem;">🎯 Comparar contra
+                        Referencias del Mercado</h3>
+                    <div class="benchmark-selectors">
+                        <div class="bench-option active" data-bench="CLUSTER" onclick="setCompBench('CLUSTER')">🏢 Mi
+                            Cluster</div>
+                        <div class="bench-option" data-bench="FOCO" onclick="setCompBench('FOCO')">⭐ Empresas Foco</div>
+                        <div class="bench-option" data-bench="GRANDES" onclick="setCompBench('GRANDES')">🏆 Grandes
+                            Empresas</div>
+                    </div>
+                </div>
+
+                <div id="company-selectors-container" class="hidden">
+                    <h3 style="margin-bottom: 1rem; color: var(--primary); font-size: 1rem;">🤝 Comparativa Directa
+                        entre Organizaciones</h3>
+                    <div class="dual-search-grid">
+                        <div
+                            style="font-weight: 700; color: var(--text-main); font-size: 0.9rem; background: var(--bg); padding: 0.5rem; border-radius: 0.5rem; display: flex; justify-content: space-between; align-items: center;">
+                            <div>Empresa 1: <span id="comp-name-1" style="color: var(--primary);">Selecciona en Ficha
+                                    Técnica</span></div>
+                            <button onclick="swapCompanies()"
+                                style="padding: 2px 8px; font-size: 0.7rem; background: var(--secondary); color: white; border: none; border-radius: 4px; cursor: pointer;">🔃
+                                Invertir</button>
+                        </div>
+                        <div style="position: relative;">
+                            <input type="text" id="company-search-2" list="company-list"
+                                placeholder="🔍 Buscar segunda empresa..."
+                                style="width: 100%; padding: 0.6rem; border: 2px solid var(--secondary); border-radius: 0.5rem;">
+                            <div
+                                style="font-size: 0.7rem; color: var(--secondary); margin-top: 0.3rem; font-weight: 600;">
+                                ESCRIBE EL NOMBRE DE LA EMPRESA RIVAL</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tabs de UE en Comparador -->
+                <div class="ue-tabs"
+                    style="margin-top: 1.5rem; border-top: 1px solid var(--border); padding-top: 1rem;">
+                    <div style="font-size: 0.8rem; font-weight: 700; color: var(--text-muted); margin-bottom: 0.5rem;">
+                        🌎 SELECCIONA UNIDAD PARA ANÁLISIS DE PENETRACIÓN:</div>
+                    <div id="comp-ue-tabs">
+                        <button class="ue-tab active" data-ue="VIVIENDA" onclick="setUE('VIVIENDA')">Vivienda</button>
+                        <button class="ue-tab" data-ue="HOTELES" onclick="setUE('HOTELES')">Hoteles</button>
+                        <button class="ue-tab" data-ue="PISCILAGO" onclick="setUE('PISCILAGO')">Piscilago</button>
+                        <button class="ue-tab" data-ue="RYD" onclick="setUE('RYD')">Recreación y Deporte</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="comparator-content" class="fade-in">
+                <!-- Se llenará dinámicamente -->
+                <div
+                    style="text-align: center; padding: 4rem; background: var(--card-bg); border-radius: 1rem; color: var(--text-muted);">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">🔍</div>
+                    <p>Selecciona una empresa en la Ficha Técnica para ver la comparación detallada.</p>
+                </div>
+            </div>
+        </div>
+    </div> <!-- Fin de #main-content -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <!-- Cargador Maestro de Datos -->
+    <script id="data-master" src="datos/datos_ficha_completa.js"></script>
+    <script src="../datos/datos_ficha_completa.js"></script>
+    <script>
+        // ==================== GLOBALS ====================
+        let datosFichaCompleta = null; // Se llenará tras el descifrado
+        let CURRENT_COMPANY = null;
+        let CURRENT_COMPANY_2 = null;
+        let CURRENT_UE = "VIVIENDA";
+        let CURRENT_SEGMENT = "Básico"; // Default
+        let CURRENT_COMP_BENCH = "CLUSTER";
+        let CURRENT_COMP_MODE = "BENCHMARK"; // "BENCHMARK" or "COMPANY"
+        let SHOW_ONLY_PREDOMINANT = false;
+
+        // ==================== INITIALIZATION ====================
+        const DASHBOARD_HASH = "843e1e738db7b050f401b58f49ccebf02f4b5b4317a062a4375ffb21f5afd914";
+
+        async function decryptData(encryptedBase64, password) {
+            try {
+                const combined = CryptoJS.enc.Base64.parse(encryptedBase64);
+
+                // Extraer Salt (16 bytes), IV (16 bytes) y Ciphertext
+                const salt = CryptoJS.lib.WordArray.create(combined.words.slice(0, 4), 16);
+                const iv = CryptoJS.lib.WordArray.create(combined.words.slice(4, 8), 16);
+                const ciphertext = CryptoJS.lib.WordArray.create(combined.words.slice(8), combined.sigBytes - 32);
+
+                const key = CryptoJS.PBKDF2(password, salt, {
+                    keySize: 256 / 32,
+                    iterations: 100000,
+                    hasher: CryptoJS.algo.SHA256
+                });
+
+                const decrypted = CryptoJS.AES.decrypt(
+                    { ciphertext: ciphertext },
+                    key,
+                    {
+                        iv: iv,
+                        mode: CryptoJS.mode.CBC,
+                        padding: CryptoJS.pad.Pkcs7
+                    }
+                );
+
+                const plaintext = decrypted.toString(CryptoJS.enc.Utf8);
+                if (!plaintext) return null;
+                return JSON.parse(plaintext);
+            } catch (e) {
+                console.error("Error descifrando:", e);
+                return null;
+            }
+        }
+
+        async function loadAllChunks() {
+            if (typeof totalDataChunks === 'undefined') {
+                console.error("❌ Error: 'totalDataChunks' no definido. ¿Subiste el archivo datos_ficha_completa.js?");
+                return false;
+            }
+
+            let combined = "";
+
+            // Buscar cuál de los dos scripts de datos cargó correctamente
+            const allScripts = Array.from(document.querySelectorAll('script'));
+            const masterScript = allScripts.find(s => s.src.includes('datos_ficha_completa.js'));
+
+            if (!masterScript) {
+                console.error("❌ No se encontró el script maestro de datos.");
+                return false;
+            }
+
+            const masterPath = masterScript.src;
+            const basePath = masterPath.substring(0, masterPath.lastIndexOf('/') + 1);
+            const cacheBuster = `?v=${new Date().getTime()}`;
+
+            console.log(`🚀 Iniciando carga de ${totalDataChunks} fragmentos desde ${basePath}...`);
+
+            for (let i = 1; i <= totalDataChunks; i++) {
+                await new Promise((resolve) => {
+                    const script = document.createElement('script');
+                    script.src = `${basePath}datos_chunk_${i}.js${cacheBuster}`;
+                    script.async = false;
+                    script.onload = () => {
+                        const chunkKey = `datosFichaEncrypted_${i}`;
+                        const chunkData = window[chunkKey];
+                        if (chunkData) {
+                            combined += chunkData;
+                            console.log(`  ✅ Fragmento ${i} cargado: ${chunkData.length.toLocaleString()} caracteres.`);
+                            delete window[chunkKey]; // Liberar memoria
+                        } else {
+                            console.error(`  ❌ Fragmento ${i} cargado pero está vacío o mal definido.`);
+                        }
+                        resolve();
+                    };
+                    script.onerror = () => {
+                        console.error(`  ❌ Error fatal: No se pudo descargar el fragmento ${i}.`);
+                        resolve();
+                    };
+                    document.head.appendChild(script);
+                });
+            }
+
+            if (combined.length === 0) {
+                console.error("❌ Error: No se recolectó ningún dato cifrado.");
+                return false;
+            }
+
+            console.log(`📦 Datos totales reensamblados: ${combined.length.toLocaleString()} caracteres.`);
+            window.datosFichaEncrypted = combined;
+            return true;
+        }
+
+        async function hashPassword(password) {
+            const encoder = new TextEncoder();
+            const data = encoder.encode(password);
+            const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+        }
+
+        async function checkPassword() {
+            const input = document.getElementById('password-input').value;
+            const errorDiv = document.getElementById('login-error');
+            const hashedInput = await hashPassword(input);
+
+            if (hashedInput === DASHBOARD_HASH) {
+                // Intentar descifrar
+                const decrypted = await decryptData(datosFichaEncrypted, input);
+                if (decrypted) {
+                    datosFichaCompleta = decrypted;
+                    sessionStorage.setItem('dashboard_access', 'true');
+                    sessionStorage.setItem('dashboard_key', input); // Guardar temporalmente para F5
+                    unlockDashboard();
+                } else {
+                    errorDiv.textContent = "⚠️ Error al descifrar datos. Verifica la clave.";
+                    errorDiv.style.display = 'block';
+                }
+            } else {
+                errorDiv.textContent = "🔑 Clave incorrecta. Reintenta.";
+                errorDiv.style.display = 'block';
+                document.getElementById('password-input').value = '';
+            }
+        }
+
+        function unlockDashboard() {
+            document.getElementById('login-screen').style.display = 'none';
+            document.getElementById('main-content').classList.remove('locked');
+            populateCompanyList();
+            setupEventListeners();
+        }
+
+        // Permitir entrar con la tecla Enter
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' && document.getElementById('login-screen').style.display !== 'none') {
+                checkPassword();
+            }
+        });
+
+        window.addEventListener('DOMContentLoaded', async () => {
+            // Inicializar tema guardado
+            initTheme();
+
+            // Cargar fragmentos antes de permitir el login
+            await loadAllChunks();
+
+            if (typeof datosFichaEncrypted === 'undefined' || !datosFichaEncrypted) {
+                document.getElementById('loading').textContent = 'Error: No se pudieron cargar los fragmentos de datos cifrados.';
+                return;
+            }
+
+            // Verificar si ya tiene sesión activa
+            if (sessionStorage.getItem('dashboard_access') === 'true') {
+                const savedKey = sessionStorage.getItem('dashboard_key');
+                if (savedKey) {
+                    const decrypted = await decryptData(datosFichaEncrypted, savedKey);
+                    if (decrypted) {
+                        datosFichaCompleta = decrypted;
+                        unlockDashboard();
+                    } else {
+                        sessionStorage.clear();
+                    }
+                }
+            }
+
+            document.getElementById('loading').classList.add('hidden');
+        });
+
+        // ==================== DARK MODE ====================
+        function initTheme() {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+            updateThemeButton(savedTheme);
+        }
+
+        function toggleTheme() {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            updateThemeButton(newTheme);
+        }
+
+        function updateThemeButton(theme) {
+            const icon = document.getElementById('theme-icon');
+            const text = document.getElementById('theme-text');
+
+            if (theme === 'dark') {
+                icon.textContent = '☀️';
+                text.textContent = 'Modo Claro';
+            } else {
+                icon.textContent = '🌙';
+                text.textContent = 'Modo Oscuro';
+            }
+        }
+
+        // ==================== ANIMATIONS ====================
+        function animateNumber(element, start, end, duration = 1000) {
+            const range = end - start;
+            const increment = range / (duration / 16);
+            let current = start;
+
+            const timer = setInterval(() => {
+                current += increment;
+                if ((increment > 0 && current >= end) || (increment < 0 && current <= end)) {
+                    current = end;
+                    clearInterval(timer);
+                }
+                element.textContent = Math.round(current).toLocaleString();
+            }, 16);
+        }
+
+        function applyFadeIn(elements, delay = 100) {
+            elements.forEach((el, index) => {
+                setTimeout(() => {
+                    el.classList.add('fade-in');
+                    el.style.animationDelay = `${index * 0.1}s`;
+                }, delay * index);
+            });
+        }
+
+        // ==================== NUMBER FORMATTING ====================
+        function formatNumber(num, decimals = 0) {
+            if (num === null || num === undefined || isNaN(num)) return '0';
+
+            // Convertir a número y redondear
+            const rounded = Number(num).toFixed(decimals);
+            const [intPart, decPart] = rounded.split('.');
+
+            // Formatear parte entera con puntos para miles
+            const formattedInt = intPart.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+
+            // Combinar con parte decimal usando coma
+            if (decimals > 0 && decPart) {
+                return formattedInt + ',' + decPart;
+            }
+            return formattedInt;
+        }
+
+        function formatPercent(num, decimals = 1) {
+            if (num === null || num === undefined || isNaN(num)) return '0,0%';
+            return formatNumber(num, decimals) + '%';
+        }
+
+        // ==================== NAVIGATION ====================
+        function switchView(viewName) {
+            document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+            document.querySelector(`.nav-tab[data-view="${viewName}"]`).classList.add('active');
+
+            if (viewName === 'ficha') {
+                document.getElementById('view-main').classList.remove('hidden');
+                document.getElementById('view-comparator').classList.add('hidden');
+            } else {
+                document.getElementById('view-main').classList.add('hidden');
+                document.getElementById('view-comparator').classList.remove('hidden');
+
+                // Update company 1 name label
+                if (CURRENT_COMPANY) {
+                    document.getElementById('comp-name-1').textContent = CURRENT_COMPANY;
+                }
+
+                renderComparator();
+            }
+        }
+
+        function setComparatorMode(mode) {
+            CURRENT_COMP_MODE = mode;
+            document.querySelectorAll('.comp-mode-tab').forEach(t => t.classList.remove('active'));
+            if (mode === 'BENCHMARK') {
+                document.getElementById('mode-bench-tab').classList.add('active');
+                document.getElementById('bench-selectors-container').classList.remove('hidden');
+                document.getElementById('company-selectors-container').classList.add('hidden');
+            } else {
+                document.getElementById('mode-company-tab').classList.add('active');
+                document.getElementById('bench-selectors-container').classList.add('hidden');
+                document.getElementById('company-selectors-container').classList.remove('hidden');
+            }
+            renderComparator();
+        }
+
+        function setCompBench(bench) {
+            CURRENT_COMP_BENCH = bench;
+            document.querySelectorAll('.bench-option').forEach(opt => {
+                opt.classList.toggle('active', opt.getAttribute('data-bench') === bench);
+            });
+            renderComparator();
+        }
+
+        function renderComparator() {
+            if (!CURRENT_COMPANY) {
+                document.getElementById('comparator-content').innerHTML = `
+                    <div style="text-align: center; padding: 4rem; background: var(--card-bg); border-radius: 1rem; color: var(--text-muted);">
+                        <div style="font-size: 3rem; margin-bottom: 1rem;">🔍</div>
+                        <p>Selecciona una empresa en la Ficha Técnica para habilitar el comparador.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            const container = document.getElementById('comparator-content');
+            const company1 = datosFichaCompleta.Empresas[CURRENT_COMPANY];
+
+            let secondDataSource = null;
+            let secondTitle = "";
+            let isDualCompany = false;
+
+            if (CURRENT_COMP_MODE === "COMPANY") {
+                if (!CURRENT_COMPANY_2) {
+                    container.innerHTML = `
+                        <div style="text-align: center; padding: 4rem; background: var(--card-bg); border-radius: 1rem; color: var(--secondary);">
+                            <div style="font-size: 3rem; margin-bottom: 1rem;">🤝</div>
+                            <p>Escribe el nombre de la segunda empresa en el buscador superior para iniciar la comparación directa.</p>
+                        </div>
+                    `;
+                    return;
+                }
+                secondDataSource = datosFichaCompleta.Empresas[CURRENT_COMPANY_2];
+                secondTitle = CURRENT_COMPANY_2;
+                isDualCompany = true;
+            } else {
+                const benchmarks = datosFichaCompleta.Benchmarks || {};
+                let benchKey = "";
+                if (CURRENT_COMP_BENCH === "CLUSTER") {
+                    benchKey = `BENCHMARK_CLUSTER_${company1.Cluster}`;
+                    secondTitle = `Sector ${company1.Cluster}`;
+                } else if (CURRENT_COMP_BENCH === "FOCO") {
+                    benchKey = "BENCHMARK_FOCO";
+                    secondTitle = "Empresas Foco (Sistema)";
+                } else {
+                    benchKey = "BENCHMARK_GRANDES";
+                    secondTitle = "Grandes Empresas (Sistema)";
+                }
+                secondDataSource = benchmarks[benchKey] || {};
+            }
+
+            const smlvValue = 1430000;
+            const total1 = company1.Total || 0;
+            const total2 = secondDataSource.Total || 1;
+            const sal1 = company1.SalarioPromedio || 0;
+            const sal2 = secondDataSource.SalarioPromedio || 0;
+
+            // Header Grid
+            container.innerHTML = `
+                <div class="comparator-grid">
+                    <!-- Lado 1: Principal -->
+                    <div class="card-column">
+                        <div class="comparison-header">
+                            <span class="comparison-col-title">📍 ${CURRENT_COMPANY}</span>
+                            <span class="badge">${company1.Cluster}</span>
+                        </div>
+                        
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem;">
+                            <div class="metric-card">
+                                <div class="value">${formatNumber(total1)}</div>
+                                <div class="label">AFILIADOS TOTALES</div>
+                            </div>
+                            <div class="metric-card">
+                                <div class="value">$${formatNumber(sal1 * smlvValue)}</div>
+                                <div class="label">SALARIO PROMEDIO</div>
+                            </div>
+                        </div>
+
+                        ${renderCompSection(company1, secondDataSource, "Segmentos", total1, total2)}
+                        ${renderCompSection(company1, secondDataSource, "Categorias", total1, total2)}
+                        ${renderCompSection(company1, secondDataSource, "Edades", total1, total2)}
+                        ${renderCompSection(company1, secondDataSource, "Salarios", total1, total2)}
+                        ${renderCompUEs(company1, secondDataSource, total1, total2)}
+                    </div>
+
+                    <!-- Lado 2: Referencia/Rival -->
+                    <div class="card-column">
+                        <div class="comparison-header">
+                            <span class="comparison-col-title">${isDualCompany ? '🤝' : '🏁'} ${secondTitle}</span>
+                            ${isDualCompany ? `<span class="badge">Sector: ${secondDataSource.Cluster}</span>` : ''}
+                        </div>
+
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem;">
+                            <div class="metric-card">
+                                <div class="value">${formatNumber(sal2 * smlvValue)}</div>
+                                <div class="label">SALARIO ${isDualCompany ? 'RIVAL' : 'REF'}</div>
+                                <div class="gap-indicator ${sal1 >= sal2 ? 'gap-positive' : 'gap-negative'}">
+                                    ${sal1 >= sal2 ? '▲' : '▼'} ${formatPercent(Math.abs((sal1 - sal2) / (sal2 || 1)) * 100, 1)}
+                                </div>
+                            </div>
+                            <div class="metric-card">
+                                <div class="value">${isDualCompany ? formatNumber(total2) : (secondDataSource.EmpresasCount || '-')}</div>
+                                <div class="label">${isDualCompany ? 'AFILIADOS RIVAL' : 'EMPRESAS EN BASE'}</div>
+                                ${isDualCompany ? `
+                                <div class="gap-indicator ${total1 >= total2 ? 'gap-positive' : 'gap-negative'}">
+                                    ${total1 >= total2 ? '▲' : '▼'} ${formatPercent(Math.abs((total1 - total2) / (total2 || 1)) * 100, 1)}
+                                </div>` : ''}
+                            </div>
+                        </div>
+
+                        ${renderCompSection(secondDataSource, company1, "Segmentos", total2, total1, true)}
+                        ${renderCompSection(secondDataSource, company1, "Categorias", total2, total1, true)}
+                        ${renderCompSection(secondDataSource, company1, "Edades", total2, total1, true)}
+                        ${renderCompSection(secondDataSource, company1, "Salarios", total2, total1, true)}
+                        ${renderCompUEs(secondDataSource, company1, total2, total1, true)}
+                    </div>
+                </div>
+
+                <!-- Radar del Comparador removido -->
+
+                <div style="margin-top: 2rem;">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 1.5rem; border-left: 4px solid var(--accent); padding-left: 1rem;">
+                        <div>
+                            <h3 style="color: var(--primary); margin: 0; font-size: 1.2rem;">🔍 Análisis Profundo por Segmento (Penetración ${CURRENT_UE})</h3>
+                            <p style="margin: 0.3rem 0 0 0; color: var(--text-muted); font-size: 0.8rem;">
+                                <strong>Afiliados:</strong> Universo total en el segmento | 
+                                <strong>Penetración:</strong> % que usa ${CURRENT_UE} | 
+                                <strong>Gap:</strong> Diferencia vs Rival/Ref
+                            </p>
+                        </div>
+                    </div>
+                    <div class="segment-comp-grid">
+                        ${renderSegmentDepth(company1, secondDataSource, CURRENT_COMPANY, secondTitle)}
+                    </div>
+                </div>
+            `;
+
+            // Radar removido
+        }
+
+        function renderCompSection(data, compareData, field, total, compareTotal, isRight = false) {
+            const items = Object.entries(data[field] || {})
+                .sort((a, b) => b[1] - a[1])
+                .slice(0, 5);
+
+            return `
+                <div class="extended-metric-card" style="margin-bottom: 1.5rem; ${isRight ? 'border-left-color: var(--secondary);' : ''}">
+                    <h4 style="border-bottom: 1px solid var(--border); padding-bottom: 0.5rem; margin-bottom: 1rem;">
+                        ${field === 'Salarios' ? '💰 Niveles Salariales' :
+                    field === 'Edades' ? '👥 Rangos de Edad' :
+                        field === 'Categorias' ? '🏷️ Categoría Afiliado' : '📊 Mix de Segmentos'}
+                    </h4>
+                    ${items.map(([name, val]) => {
+                            const pct = (val / total) * 100;
+                            const cmpPct = ((compareData[field]?.[name] || 0) / compareTotal) * 100;
+                            const diff = pct - cmpPct;
+                            return `
+                            <div class="mini-bar-row">
+                                <div class="mini-bar-label">
+                                    <span>${name}</span>
+                                    <span>${formatPercent(pct, 1)} 
+                                        <small style="margin-left:5px; color: ${diff >= 0 ? 'var(--success)' : 'var(--danger)'}">
+                                            (${diff >= 0 ? '+' : ''}${diff.toFixed(1)}%)
+                                        </small>
+                                    </span>
+                                </div>
+                                <div class="mini-bar-bg">
+                                    <div class="mini-bar-fill" style="width: ${pct}%; background: ${isRight ? 'var(--secondary)' : 'var(--primary)'}"></div>
+                                </div>
+                            </div>
+                        `;
+                        }).join('')}
+                </div>
+            `;
+        }
+
+        function renderSegmentDepth(data1, data2, title1, title2) {
+            const SEGMENTOS = ["Básico", "Medio", "Joven", "Alto"];
+            const isDual = CURRENT_COMP_MODE === "COMPANY";
+
+            return SEGMENTOS.map(segName => {
+                const count1 = data1.Segmentos[segName] || 0;
+                const count2 = data2.Segmentos[segName] || 0;
+
+                const cons1 = (data1.Consumos?.[CURRENT_UE] || {})[`2025_${segName}`] || 0;
+                const cons2 = (data2.Consumos?.[CURRENT_UE] || {})[`2025_${segName}`] || 0;
+
+                const cov1 = count1 > 0 ? (cons1 / count1) * 100 : 0;
+                const cov2 = count2 > 0 ? (cons2 / count2) * 100 : 0;
+
+                const diffCov = cov1 - cov2;
+                const diffVol = count1 - count2;
+
+                // --- Generación de Insights Dinámicos ---
+                let volumeInsight = "";
+                if (count2 > 0) {
+                    const ratio = count1 / count2;
+                    if (ratio > 1.1) {
+                        volumeInsight = `<strong>${title1}</strong> tiene <strong>${ratio.toFixed(1)} veces más afiliados</strong> que <strong>${title2}</strong> en este segmento.`;
+                    } else if (ratio < 0.9) {
+                        const invRatio = 1 / ratio;
+                        volumeInsight = `<strong>${title2}</strong> tiene <strong>${invRatio.toFixed(1)} veces más afiliados</strong> captados en este perfil.`;
+                    } else {
+                        volumeInsight = `Presencia de afiliados <strong>muy equilibrada</strong> entre <strong>${title1}</strong> y <strong>${title2}</strong>.`;
+                    }
+                }
+
+                let growthInsight = "";
+                if (Math.abs(diffCov) < 0.5) {
+                    growthInsight = `Ambas organizaciones logran una <strong>efectividad similar</strong> en este servicio.`;
+                } else if (diffCov > 0) {
+                    growthInsight = `<strong>${title1}</strong> logra <strong>mayor cobertura</strong> que <strong>${title2}</strong> (Gap: <strong>+${diffCov.toFixed(1)}%</strong>).`;
+                } else {
+                    growthInsight = `<strong>${title2}</strong> tiene <strong>mejor llegada</strong> al segmento (Gap: <strong>${diffCov.toFixed(1)}%</strong>).`;
+                }
+
+                return `
+                    <div class="seg-comp-card">
+                        <div class="seg-comp-header">
+                            <span class="seg-comp-title">${segName}</span>
+                            <span style="font-size:0.7rem; color:var(--text-muted);">vs ${isDual ? 'Rival' : 'Bench'}</span>
+                        </div>
+                        
+                        <div class="seg-comp-metric-row">
+                            <div class="seg-comp-val-box">
+                                <span class="seg-comp-lab">Afiliados</span>
+                                <span class="seg-comp-val" style="color:var(--primary);">${formatNumber(count1)}</span>
+                                <div style="font-size:0.65rem; color:${diffVol >= 0 ? 'var(--success)' : 'var(--danger)'}">
+                                    ${diffVol >= 0 ? '▲' : '▼'} ${formatNumber(Math.abs(diffVol))}
+                                </div>
+                            </div>
+                            <div class="seg-comp-val-box">
+                                <span class="seg-comp-lab">Rival/Ref</span>
+                                <span class="seg-comp-val">${formatNumber(count2)}</span>
+                            </div>
+                        </div>
+
+                        <div class="seg-comp-metric-row">
+                            <div class="seg-comp-val-box">
+                                <span class="seg-comp-lab">Penetración</span>
+                                <span class="seg-comp-val" style="color:var(--secondary);">${formatPercent(cov1, 1)}</span>
+                                <div style="font-size:0.65rem; font-weight:700; color:${diffCov >= 0 ? 'var(--success)' : 'var(--danger)'}">
+                                    Gap: ${diffCov >= 0 ? '+' : ''}${diffCov.toFixed(1)}%
+                                </div>
+                            </div>
+                            <div class="seg-comp-val-box">
+                                <span class="seg-comp-lab">Rival/Ref</span>
+                                <span class="seg-comp-val">${formatPercent(cov2, 1)}</span>
+                            </div>
+                        </div>
+
+                        <!-- Insight Textual -->
+                        <div style="margin-top: 1rem; padding: 0.75rem; background: var(--bg); border-radius: 0.5rem; border-top: 2px solid ${diffCov >= 0 ? 'var(--success)' : 'var(--danger)'};">
+                            <p style="margin: 0; font-size: 0.75rem; color: var(--text-main); line-height: 1.4;">
+                                💡 ${volumeInsight}<br>
+                                🎯 ${growthInsight}
+                            </p>
+                        </div>
+
+                        <div style="margin-top: 0.75rem; text-align: center;">
+                            <div style="height: 6px; background: var(--bg); border-radius: 3px; overflow: hidden; display: flex;">
+                                <div style="width: ${cov1}%; background: var(--primary);"></div>
+                                <div style="width: ${cov2}%; background: var(--secondary); opacity: 0.3;"></div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function renderCompUEs(data, compareData, total, compareTotal, isRight = false) {
+            const ues = ["VIVIENDA", "HOTELES", "PISCILAGO", "RYD"];
+
+            return `
+                <div class="extended-metric-card" style="margin-bottom: 1.5rem; ${isRight ? 'border-left-color: var(--secondary);' : ''}">
+                    <h4 style="border-bottom: 1px solid var(--border); padding-bottom: 0.5rem; margin-bottom: 1rem;">🏢 Cobertura por Unidad</h4>
+                    ${ues.map(ue => {
+                const ueCons = data.Consumos?.[ue] || {};
+                const val25 = Object.keys(ueCons).filter(k => k.startsWith('2025_')).reduce((sum, k) => sum + ueCons[k], 0);
+                const pct = total > 0 ? (val25 / total) * 100 : 0;
+
+                const ueCmp = compareData.Consumos?.[ue] || {};
+                const cmpVal25 = Object.keys(ueCmp).filter(k => k.startsWith('2025_')).reduce((sum, k) => sum + ueCmp[k], 0);
+                const cmpPct = compareTotal > 0 ? (cmpVal25 / compareTotal) * 100 : 0;
+                const diff = pct - cmpPct;
+
+                return `
+                            <div class="mini-bar-row">
+                                <div class="mini-bar-label">
+                                    <span>${ue === 'RYD' ? 'ESCUELAS Y PRÁCTICA LIBRE' : ue}</span>
+                                    <span>${formatPercent(pct, 1)} 
+                                        <small style="margin-left:5px; color: ${diff >= 0 ? 'var(--success)' : 'var(--danger)'}">
+                                            (${diff >= 0 ? '+' : ''}${diff.toFixed(1)}%)
+                                        </small>
+                                    </span>
+                                </div>
+                                <div class="mini-bar-bg">
+                                    <div class="mini-bar-fill" style="width: ${pct}%; background: ${isRight ? 'var(--secondary)' : 'var(--primary)'}"></div>
+                                </div>
+                            </div>
+                        `;
+            }).join('')}
+                </div>
+            `;
+        }
+
+        // renderComparatorRadar removida
+
+        function swapCompanies() {
+            if (!CURRENT_COMPANY || !CURRENT_COMPANY_2) return;
+            const temp = CURRENT_COMPANY;
+            CURRENT_COMPANY = CURRENT_COMPANY_2;
+            CURRENT_COMPANY_2 = temp;
+
+            // Sync with UI search inputs
+            document.getElementById('company-search').value = CURRENT_COMPANY;
+            document.getElementById('company-search-2').value = CURRENT_COMPANY_2;
+            document.getElementById('comp-name-1').textContent = CURRENT_COMPANY;
+
+            // Also update the main profile data
+            selectCompany(CURRENT_COMPANY);
+            renderComparator();
+        }
+
+        // ==================== SETUP ====================
+        function populateCompanyList() {
+            const datalist = document.getElementById('company-list');
+            const companies = datosFichaCompleta.Empresas || {};
+
+            Object.keys(companies).sort().forEach(empresaName => {
+                const option = document.createElement('option');
+                option.value = empresaName;
+                datalist.appendChild(option);
+            });
+        }
+
+        function setupEventListeners() {
+            // Search input
+            document.getElementById('company-search').addEventListener('input', (e) => {
+                const searchValue = e.target.value.trim();
+                if (searchValue && datosFichaCompleta.Empresas[searchValue]) {
+                    selectCompany(searchValue);
+                }
+            });
+
+            // Search 2 (Comparator Dual)
+            document.getElementById('company-search-2').addEventListener('input', (e) => {
+                const searchValue = e.target.value.trim();
+                if (searchValue && datosFichaCompleta.Empresas[searchValue]) {
+                    CURRENT_COMPANY_2 = searchValue;
+                    renderComparator();
+                }
+            });
+
+            // UE tabs are now handled by onclick attributes calling setUE()
+        }
+
+        function setSegment(segName) {
+            document.querySelectorAll('.seg-tab').forEach(t => {
+                t.classList.toggle('active', t.getAttribute('data-seg') === segName);
+            });
+            CURRENT_SEGMENT = segName;
+            if (CURRENT_COMPANY) {
+                renderAnalysis();
+            }
+        }
+
+        function setUE(ueName) {
+            // Sincronizar todas las pestañas de UE en el dashboard
+            document.querySelectorAll('.ue-tab').forEach(t => {
+                t.classList.toggle('active', t.getAttribute('data-ue') === ueName);
+            });
+
+            CURRENT_UE = ueName;
+
+            if (CURRENT_COMPANY) {
+                renderAnalysis();
+                // Actualizar comparador si está visible
+                if (!document.getElementById('view-comparator').classList.contains('hidden')) {
+                    renderComparator();
+                }
+            }
+        }
+
+        // ==================== RENDER COMPANY PROFILE ====================
+        function selectCompany(empresaName) {
+            CURRENT_COMPANY = empresaName;
+            const company = datosFichaCompleta.Empresas[empresaName];
+            const benchmarks = datosFichaCompleta.Benchmarks || {};
+
+            // Show profile
+            document.getElementById('company-profile').classList.remove('hidden');
+            document.getElementById('analysis-section').classList.remove('hidden');
+
+            // Company name
+            document.getElementById('company-name').textContent = empresaName;
+
+            // Badges
+            const badgesDiv = document.getElementById('company-badges');
+            badgesDiv.innerHTML = `
+                <span class="badge">${company.Piramide}</span>
+                ${company.EmpresaFoco === 'X' ? '<span class="badge">⭐ Foco</span>' : ''}
+                <span class="badge">${company.NIT || 'N/A'}</span>
+            `;
+
+            // Metrics
+            const segmentos = company.Segmentos || {};
+            const totalAfiliados = company.Total || 0;
+            const avgSalaryEmp = company.SalarioPromedio || 0;
+            const smlvValue = 1430000; // SMLV 2025
+
+            // HELPER FUNCTIONS FOR UNIVERSAL COMPARISONS (Moved to global scope)
+            window.getComparisonHTML = function (val, benchVal, isRelative = true) {
+                const diff = isRelative ? ((val - benchVal) / (benchVal || 1) * 100) : (val - benchVal);
+                const color = diff >= 0 ? '#10b981' : '#ef4444';
+                const icon = diff >= 0 ? '▲' : '▼';
+                return `
+                    <span style="font-weight: 700; color: ${color}">
+                        ${icon} ${formatPercent(Math.abs(diff), 1)}
+                    </span>
+                `;
+            }
+
+            // GENERIC TOGGLE FUNCTION
+            window.toggleAnalysisPanel = function (panelId, btnId) {
+                const panel = document.getElementById(panelId);
+                const btn = document.getElementById(btnId);
+                if (panel.classList.contains('hidden')) {
+                    panel.classList.remove('hidden');
+                    btn.innerHTML = 'Ocultar análisis ▴';
+                } else {
+                    panel.classList.add('hidden');
+                    btn.innerHTML = 'Ver análisis detallado ▾';
+                }
+            };
+
+            window.getGlobalBenchmarkComparisonHTML = function (targetVal, benchKey, subKey = null, isRelative = true, uniqueId = "generic") {
+                const getValue = (bKey) => {
+                    const bData = benchmarks[bKey];
+                    if (!bData) return 0;
+                    if (subKey) return bData[benchKey]?.[subKey] || 0;
+                    return bData[benchKey] || 0;
+                };
+
+                const bGrandes = getValue("BENCHMARK_GRANDES");
+                const bFoco = getValue("BENCHMARK_FOCO");
+                const bCluster = getValue(`BENCHMARK_CLUSTER_${company.Cluster}`);
+
+                const formatRef = (val) => isRelative ? (val.toFixed(1)) : formatNumber(val);
+                const panelId = `panel-bench-${uniqueId}`;
+                const btnId = `btn-bench-${uniqueId}`;
+
+                return `
+                    <button id="${btnId}" class="ue-toggle-btn" onclick="toggleAnalysisPanel('${panelId}', '${btnId}')" style="width: 100%; margin-top: 0.5rem; padding: 0.3rem; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 4px; font-size: 0.55rem; font-weight: 700; color: #64748b; cursor: pointer;">
+                        Ver análisis detallado ▾
+                    </button>
+                    <div id="${panelId}" class="hidden" style="font-size: 0.62rem; text-align: left; margin-top: 0.4rem; color: var(--text-muted); padding-top: 0.4rem; border-top: 1px dashed #cbd5e1; line-height: 1.2;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 2px;">
+                            <span>vs Clust:</span> 
+                            <span>${getComparisonHTML(targetVal, bCluster, isRelative)} <span style="font-size: 0.55rem; color: #94a3b8; font-weight: normal;">(${formatRef(bCluster)})</span></span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 2px;">
+                            <span>vs Foco:</span> 
+                            <span>${getComparisonHTML(targetVal, bFoco, isRelative)} <span style="font-size: 0.55rem; color: #94a3b8; font-weight: normal;">(${formatRef(bFoco)})</span></span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between;">
+                            <span>vs Gran:</span> 
+                            <span>${getComparisonHTML(targetVal, bGrandes, isRelative)} <span style="font-size: 0.55rem; color: #94a3b8; font-weight: normal;">(${formatRef(bGrandes)})</span></span>
+                        </div>
+                    </div>
+                `;
+            };
+
+            // SPECIFIC FOR SEGMENTS / BARS (Based on Pct)
+            window.getGlobalBarComparisonHTML = function (empVal, totalEmp, benchCategory, itemName, uniqueId = "bar") {
+                const empPct = totalEmp > 0 ? (empVal / totalEmp * 100) : 0;
+
+                const getBenchPct = (bKey) => {
+                    const bData = benchmarks[bKey];
+                    if (!bData || bData.Total === 0) return 0;
+                    const bVal = bData[benchCategory]?.[itemName] || 0;
+                    return (bVal / bData.Total * 100);
+                };
+
+                const bGrandesPct = getBenchPct("BENCHMARK_GRANDES");
+                const bFocoPct = getBenchPct("BENCHMARK_FOCO");
+                const bClusterPct = getBenchPct(`BENCHMARK_CLUSTER_${company.Cluster}`);
+
+                const panelId = `panel-bar-${uniqueId}`;
+                const btnId = `btn-bar-${uniqueId}`;
+
+                return `
+                    <button id="${btnId}" class="ue-toggle-btn" onclick="toggleAnalysisPanel('${panelId}', '${btnId}')" style="width: 100%; margin-top: 0.3rem; padding: 0.2rem; background: #fafafa; border: 1px solid #f1f5f9; border-radius: 4px; font-size: 0.5rem; font-weight: 700; color: #94a3b8; cursor: pointer;">
+                        Ver análisis ▾
+                    </button>
+                    <div id="${panelId}" class="hidden" style="font-size: 0.62rem; text-align: left; margin-top: 0.3rem; color: var(--text-muted); padding-top: 0.3rem; border-top: 1px dashed #eee; line-height: 1.2;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 2px;">
+                            <span>vs Clust:</span> 
+                            <span>${getComparisonHTML(empPct, bClusterPct, true)} <span style="font-size: 0.55rem; color: #94a3b8; font-weight: normal;">(${bClusterPct.toFixed(1)}%)</span></span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 2px;">
+                            <span>vs Foco:</span> 
+                            <span>${getComparisonHTML(empPct, bFocoPct, true)} <span style="font-size: 0.55rem; color: #94a3b8; font-weight: normal;">(${bFocoPct.toFixed(1)}%)</span></span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between;">
+                            <span>vs Gran:</span> 
+                            <span>${getComparisonHTML(empPct, bGrandesPct, true)} <span style="font-size: 0.55rem; color: #94a3b8; font-weight: normal;">(${bGrandesPct.toFixed(1)}%)</span></span>
+                        </div>
+                    </div>
+                `;
+            };
+
+            const metricsDiv = document.getElementById('company-metrics');
+            const topSegmentos = Object.entries(segmentos)
+                .filter(([_, count]) => count > 0)
+                .sort(([_, a], [__, b]) => b - a)
+                .slice(0, 4);
+
+            metricsDiv.innerHTML = `
+                <div class="metric-card">
+                    <div class="value">${formatNumber(totalAfiliados)}</div>
+                    <div class="label">TOTAL AFILIADOS</div>
+                    ${getGlobalBenchmarkComparisonHTML(totalAfiliados, "Total", null, true, "afiliados")}
+                </div>
+                
+                <div class="metric-card" style="min-width: 170px;">
+                    <div class="value">$${formatNumber(avgSalaryEmp * smlvValue)}</div>
+                    <div class="percentage">${formatNumber(avgSalaryEmp, 1)} SMMLV</div>
+                    <div class="label">SALARIO PROMEDIO</div>
+                    ${getGlobalBenchmarkComparisonHTML(avgSalaryEmp, "SalarioPromedio", null, true, "salary")}
+                </div>
+
+                ${topSegmentos.map(([segName, count], idx) => {
+                const percentage = totalAfiliados > 0 ? ((count / totalAfiliados) * 100) : 0;
+                return `
+                        <div class="metric-card" style="min-width: 160px;">
+                            <div class="value">${formatNumber(count)}</div>
+                            <div class="percentage">${formatPercent(percentage)}</div>
+                            <div class="label">${segName}</div>
+                            ${getGlobalBarComparisonHTML(count, totalAfiliados, "Segmentos", segName, `seg-${idx}`)}
+                        </div>
+                    `;
+            }).join('')}
+            `;
+
+            // Segmento Predominante
+            const predominantDiv = document.getElementById('company-predominant');
+            if (company.SegmentoPredominante) {
+                predominantDiv.style.display = 'block';
+                document.getElementById('predominant-value').textContent = company.SegmentoPredominante;
+                // Auto-select predominant segment on first load (from the allowed 4)
+                const allowedSegments = ["Básico", "Medio", "Joven", "Alto"];
+                if (!CURRENT_SEGMENT || !allowedSegments.includes(CURRENT_SEGMENT)) {
+                    CURRENT_SEGMENT = allowedSegments.includes(company.SegmentoPredominante)
+                        ? company.SegmentoPredominante
+                        : "Básico";
+                }
+            } else {
+                predominantDiv.style.display = 'none';
+            }
+
+            // Sync segment tabs
+            document.querySelectorAll('.seg-tab').forEach(t => {
+                t.classList.toggle('active', t.getAttribute('data-seg') === CURRENT_SEGMENT);
+            });
+
+            // Extended Metrics (Edades, Salarios, Categorías)
+            const extendedDiv = document.getElementById('profile-grid-extended');
+
+            const renderMiniBars = (dataMap, title, type, filterND = true) => {
+                const topItems = Object.entries(dataMap)
+                    .filter(([name, _]) => !filterND || name !== 'N/D')
+                    .sort(([_, a], [__, b]) => b - a)
+                    .slice(0, 4);
+
+                if (topItems.length === 0) return '';
+
+                return `
+                    <div class="extended-metric-card" style="padding-bottom: 0.5rem;">
+                        <h4 style="margin-bottom: 1rem; border-bottom: 1px solid var(--border); padding-bottom: 0.5rem;">${title}</h4>
+                        ${topItems.map(([name, count], idx) => {
+                    const pct = totalAfiliados > 0 ? ((count / totalAfiliados) * 100) : 0;
+                    const safeId = name.replace(/[^a-z0-9]/gi, '_').toLowerCase();
+                    return `
+                                <div class="mini-bar-row" style="margin-bottom: 1.25rem;">
+                                    <div class="mini-bar-label">
+                                        <span style="font-weight:600;">${name}</span>
+                                        <strong style="color: var(--primary);">${formatPercent(pct)}</strong>
+                                    </div>
+                                    <div class="mini-bar-bg" style="height: 10px; margin-bottom: 0.3rem;">
+                                        <div class="mini-bar-fill" style="width: ${pct}%; background: var(--primary);"></div>
+                                    </div>
+                                    ${getGlobalBarComparisonHTML(count, totalAfiliados, type, name, `ext-${type}-${safeId}`)}
+                                </div>
+                            `;
+                }).join('')}
+                    </div>
+                `;
+            };
+
+            extendedDiv.innerHTML = `
+                ${renderMiniBars(company.Categorias || {}, "🏷️ Clasificación Categoría", "Categorias")}
+                ${renderMiniBars(company.Edades || {}, "👥 Distribución por Edad", "Edades")}
+                ${renderMiniBars(company.Salarios || {}, "💰 Niveles Salariales (SMMLV)", "Salarios")}
+            `;
+
+            // Render summary INTEGRATED
+            renderSummaryIntegrated();
+
+            // Render analysis
+            renderAnalysis();
+
+            // Update comparator if it's visible
+            if (!document.getElementById('view-comparator').classList.contains('hidden')) {
+                renderComparator();
+            }
+        }
+
+        // ==================== RENDER ANALYSIS ====================
+        function renderAnalysis() {
+            const company = datosFichaCompleta.Empresas[CURRENT_COMPANY];
+            const benchmarks = datosFichaCompleta.Benchmarks || {};
+            const gridDiv = document.getElementById('segment-grid');
+            gridDiv.innerHTML = '';
+
+            const UES = ["VIVIENDA", "HOTELES", "PISCILAGO", "RYD"];
+            const segName = CURRENT_SEGMENT;
+
+            // Totales de la empresa para el segmento
+            const segTotalAfiliados = company.Segmentos[segName] || 0;
+            if (segTotalAfiliados === 0) {
+                gridDiv.innerHTML = `<div style="grid-column: 1/-1; padding: 3rem; text-align: center; color: var(--text-muted);">La empresa no cuenta con afiliados en el segmento <strong>${segName}</strong>.</div>`;
+                return;
+            }
+
+            const headerInfo = document.createElement('div');
+            headerInfo.className = 'fade-in';
+            headerInfo.style = "grid-column: 1/-1; margin-bottom: 1rem; background: var(--primary); color: white; padding: 1rem; border-radius: 0.75rem; display: flex; justify-content: space-between; align-items: center;";
+            headerInfo.innerHTML = `
+                <div>
+                   <span style="font-size: 0.8rem; opacity: 0.9; text-transform: uppercase; font-weight: 700;">Análisis de Perfil:</span>
+                   <h2 style="margin:0; font-size: 1.8rem;">${segName}</h2>
+                </div>
+                <div style="text-align: right;">
+                    <div style="font-size: 1.4rem; font-weight: 800;">${formatNumber(segTotalAfiliados)}</div>
+                    <div style="font-size: 0.75rem; opacity: 0.9; font-weight: 600;">AFILIADOS TOTALES</div>
+                </div>
+            `;
+            gridDiv.appendChild(headerInfo);
+
+            UES.forEach(ue => {
+                const ueCons = company.Consumos[ue] || {};
+                const c24 = ueCons[`2024_${segName}`] || 0;
+                const c25 = ueCons[`2025_${segName}`] || 0;
+
+                const cov24 = ((c24 / segTotalAfiliados) * 100).toFixed(1);
+                const cov25 = ((c25 / segTotalAfiliados) * 100).toFixed(1);
+                const growth = (cov25 - cov24).toFixed(1);
+
+                // Benchmarks
+                const getCov = (bKey) => {
+                    const b = benchmarks[bKey];
+                    if (!b) return 0;
+                    const bTotal = b.Segmentos[segName] || 1;
+                    const bCons = (b.Consumos[ue] || {})[`2025_${segName}`] || 0;
+                    return (bCons / bTotal * 100);
+                };
+
+                const bClPct = getCov(`BENCHMARK_CLUSTER_${company.Cluster}`);
+                const bFoPct = getCov("BENCHMARK_FOCO");
+                const bGrPct = getCov("BENCHMARK_GRANDES");
+                const bClCount = (benchmarks[`BENCHMARK_CLUSTER_${company.Cluster}`]?.Consumos[ue] || {})[`2025_${segName}`] || 0;
+
+                // Meta de volumen para este segmento en esta UE
+                const getMeta = (pct) => Math.round(segTotalAfiliados * pct / 100);
+                const metaSector = getMeta(bClPct);
+                const metaGrandes = getMeta(bGrPct);
+                const metaFoco = getMeta(bFoPct);
+
+                // Salud (Ponderada)
+                const weightedMarketCov = (bClPct * 0.5 + bFoPct * 0.3 + bGrPct * 0.2);
+                const healthIndex = (cov25 / (weightedMarketCov || 0.1)) * 100;
+
+                let healthLabel = "Estable";
+                let healthColor = "#64748B";
+                if (healthIndex > 110) { healthLabel = "Óptima"; healthColor = "var(--success)"; }
+                else if (healthIndex < 80) { healthLabel = "Crítica"; healthColor = "var(--danger)"; }
+
+                const card = document.createElement('div');
+                card.className = 'segment-card fade-in';
+                card.style.gridColumn = "span 1";
+                card.innerHTML = `
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem;">
+                        <div>
+                            <h3 style="margin: 0; color: var(--primary); font-size: 1.2rem; font-weight: 800;">${ue === 'RYD' ? 'ESCUELAS Y PRÁCTICA LIBRE' : ue}</h3>
+                            <span class="badge" style="background: ${healthColor}; margin-top: 0.4rem;">Salud: ${healthLabel}</span>
+                        </div>
+                        <div style="text-align: right;">
+                            <div style="font-size: 1.3rem; font-weight: 800; color: var(--primary);">${cov25}%</div>
+                            <div style="font-size: 0.7rem; color: var(--text-muted); font-weight: 600;">COBERTURA 2025</div>
+                        </div>
+                    </div>
+
+                    <div style="background: var(--bg); border-radius: 0.5rem; padding: 0.75rem; margin-bottom: 1rem; display: flex; align-items: stretch; gap: 0.75rem;">
+                        <!-- Columna Izquierda: Consumo Real -->
+                        <div style="flex: 0.8; display: flex; flex-direction: column; justify-content: center; border-right: 1px solid var(--border); padding-right: 0.5rem;">
+                            <span style="font-size: 0.55rem; color: var(--text-muted); font-weight: 700; display: block; margin-bottom: 0.2rem; text-transform: uppercase;">Consumo Real</span>
+                            <div style="font-size: 1.3rem; font-weight: 900; color: var(--primary); line-height: 1;">${formatNumber(c25)}</div>
+                            <span style="font-size: 0.55rem; color: var(--text-muted);">afiliados</span>
+                        </div>
+                        <!-- Columna Derecha: Metas de Mercado -->
+                        <div style="flex: 1.2; display: flex; flex-direction: column; gap: 0.3rem; justify-content: center;">
+                            <div style="display: flex; justify-content: space-between; align-items: baseline;">
+                                <span style="font-size: 0.55rem; color: var(--secondary); font-weight: 700;">OBJ. SECTOR</span>
+                                <span style="font-size: 0.9rem; font-weight: 800; color: var(--secondary);">${formatNumber(metaSector)}</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; align-items: baseline;">
+                                <span style="font-size: 0.55rem; color: var(--secondary); font-weight: 700;">META GRANDES</span>
+                                <span style="font-size: 0.9rem; font-weight: 800; color: var(--secondary);">${formatNumber(metaGrandes)}</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; align-items: baseline;">
+                                <span style="font-size: 0.55rem; color: var(--secondary); font-weight: 700;">META FOCO</span>
+                                <span style="font-size: 0.9rem; font-weight: 800; color: var(--secondary);">${formatNumber(metaFoco)}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="font-size: 0.75rem; margin-bottom: 1.5rem; border-top: 1px solid var(--border); padding-top: 1rem;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 6px; align-items: center;">
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <span style="background: ${growth >= 0 ? '#dcfce7' : '#fee2e2'}; color: ${growth >= 0 ? '#166534' : '#991b1b'}; width: 14px; height: 14px; display: flex; align-items: center; justify-content: center; border-radius: 4px; font-size: 0.5rem;">${growth >= 0 ? '▲' : '▼'}</span>
+                                <span style="font-weight: 700;">${Math.abs(growth)}%</span>
+                                <span style="color: var(--text-muted); font-size: 0.65rem;">crecimiento interanual</span>
+                            </div>
+                        </div>
+
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 6px; align-items: center;">
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <span style="background: ${cov25 >= bGrPct ? '#dcfce7' : '#fee2e2'}; color: ${cov25 >= bGrPct ? '#166534' : '#991b1b'}; width: 14px; height: 14px; display: flex; align-items: center; justify-content: center; border-radius: 4px; font-size: 0.5rem;">${cov25 >= bGrPct ? '▲' : '▼'}</span>
+                                <span style="font-weight: 700;">${Math.abs(cov25 - bGrPct).toFixed(1)}%</span>
+                                <span style="color: var(--text-muted); font-size: 0.65rem;">vs promedio Grandes</span>
+                            </div>
+                        </div>
+
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 6px; align-items: center;">
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <span style="background: ${cov25 >= bFoPct ? '#dcfce7' : '#fee2e2'}; color: ${cov25 >= bFoPct ? '#166534' : '#991b1b'}; width: 14px; height: 14px; display: flex; align-items: center; justify-content: center; border-radius: 4px; font-size: 0.5rem;">${cov25 >= bFoPct ? '▲' : '▼'}</span>
+                                <span style="font-weight: 700;">${Math.abs(cov25 - bFoPct).toFixed(1)}%</span>
+                                <span style="color: var(--text-muted); font-size: 0.65rem;">vs promedio Foco</span>
+                            </div>
+                        </div>
+
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 1rem; align-items: center;">
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <span style="background: ${cov25 >= bClPct ? '#dcfce7' : '#fee2e2'}; color: ${cov25 >= bClPct ? '#166534' : '#991b1b'}; width: 14px; height: 14px; display: flex; align-items: center; justify-content: center; border-radius: 4px; font-size: 0.5rem;">${cov25 >= bClPct ? '▲' : '▼'}</span>
+                                <span style="font-weight: 700;">${Math.abs(cov25 - bClPct).toFixed(1)}%</span>
+                                <span style="color: var(--text-muted); font-size: 0.65rem;">vs promedio Sector</span>
+                            </div>
+                        </div>
+
+                        <div style="background: #f8fafc; padding: 0.5rem; border-radius: 6px; font-size: 0.65rem;">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 2px;">
+                                <span style="color: var(--text-muted);">Promedio Grandes:</span>
+                                <span style="font-weight: 700; color: var(--primary);">${bGrPct.toFixed(1)}%</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 2px;">
+                                <span style="color: var(--text-muted);">Promedio Foco:</span>
+                                <span style="font-weight: 700; color: var(--primary);">${bFoPct.toFixed(1)}%</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between;">
+                                <span style="color: var(--text-muted);">Promedio Sector PÚBLICO:</span>
+                                <span style="font-weight: 700; color: var(--primary);">${bClPct.toFixed(1)}%</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 1.5rem;">
+                        <button class="ue-toggle-btn" onclick="toggleAnalysisPanel('detail-main-${ue}', 'btn-detail-main-${ue}')" id="btn-detail-main-${ue}" style="width: 100%; padding: 0.5rem; border: 1px solid var(--border); border-radius: 0.5rem; background: white; font-size: 0.7rem; font-weight: 700; color: var(--text-muted); cursor: pointer;">
+                            Ver análisis detallado ▾
+                        </button>
+                        <div id="detail-main-${ue}" class="hidden" style="margin-top: 0.75rem; font-size: 0.75rem;">
+                            <!-- Insight Narrativo oculto por defecto -->
+                            <div id="insight-${ue}" style="margin-bottom: 1rem;">
+                                ${getUEInsight(ue, parseFloat(cov25), parseInt(c25), bClPct, bClCount, bFoPct, bGrPct, { metaSector, metaGrandes, metaFoco })}
+                            </div>
+
+                            <table style="width: 100%; border-collapse: collapse;">
+                                <thead style="background:var(--bg); text-align: left;">
+                                    <tr>
+                                        <th style="padding: 0.4rem; font-size: 0.65rem;">${ue === 'RYD' ? 'CATEGORIA_1' : (ue === 'VIVIENDA' ? 'Proyecto' : (ue === 'HOTELES' ? 'Sede/Hotel' : 'Detalle Táctico'))}</th>
+                                        <th style="text-align:center; padding: 0.4rem; font-size: 0.65rem;">'24</th>
+                                        <th style="text-align:center; padding: 0.4rem; font-size: 0.65rem;">'25</th>
+                                        <th style="text-align:center; padding: 0.4rem; font-size: 0.65rem;">% Var</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    ${renderSedesForSegment(company, ue)}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                `;
+                gridDiv.appendChild(card);
+            });
+
+            // Ocultar sección antigua de detalles externos ya que están integrados
+            document.getElementById('ue-detailed-breakdown').classList.add('hidden');
+
+            // Render chart (Radar)
+            // renderComparisonChart removida
+        }
+
+        function renderSedesForSegment(company, ue) {
+            const ueDet = (company.DetallesUE && company.DetallesUE[ue]) ? company.DetallesUE[ue] : null;
+            if (!ueDet) return '<tr><td colspan="4" style="text-align:center; padding:1rem;">Sin detalle disponible</td></tr>';
+
+            const sedes24 = ueDet["2024"] || {};
+            const sedes25 = ueDet["2025"] || {};
+
+            // Consolidar todas las sedes únicas de ambos años
+            const allSedes = new Set([...Object.keys(sedes24), ...Object.keys(sedes25)]);
+
+            return Array.from(allSedes)
+                .map(name => {
+                    const v24 = sedes24[name] || 0;
+                    const v25 = sedes25[name] || 0;
+                    const diff = v25 - v24;
+                    const varPct = v24 > 0 ? (diff / v24 * 100) : (v25 > 0 ? 100 : 0);
+                    return { name, v24, v25, varPct, total: v24 + v25 };
+                })
+                .sort((a, b) => b.v25 - a.v25 || b.v24 - a.v24) // Priorizar mayor consumo en 2025
+                .slice(0, 10)
+                .map(item => `
+                    <tr style="border-bottom: 1px solid #f1f5f9;">
+                        <td style="padding: 0.4rem; font-weight: 600; font-size: 0.65rem;">${item.name}</td>
+                        <td style="text-align:center; color: var(--text-muted); font-size: 0.65rem;">${formatNumber(item.v24)}</td>
+                        <td style="text-align:center; color: var(--primary); font-weight: 700; font-size: 0.65rem;">${formatNumber(item.v25)}</td>
+                        <td style="text-align:center; font-size: 0.6rem; font-weight: 700; color: ${item.varPct >= 0 ? 'var(--success)' : 'var(--danger)'}">
+                            ${item.varPct >= 0 ? '+' : ''}${item.varPct.toFixed(0)}%
+                        </td>
+                    </tr>
+                `).join('');
+        }
+
+        // Render chart
+        renderComparisonChart();
+
+        // --- Modal Logic ---
+        function openModal() {
+            document.getElementById('methodologyModal').style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('methodologyModal').style.display = 'none';
+        }
+
+        window.onclick = function (event) {
+            const modal = document.getElementById('methodologyModal');
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+
+        function togglePredominant() {
+            SHOW_ONLY_PREDOMINANT = !SHOW_ONLY_PREDOMINANT;
+            const btn = document.getElementById('toggle-predominant');
+            const icon = document.getElementById('toggle-icon');
+            const text = document.getElementById('toggle-text');
+
+            if (SHOW_ONLY_PREDOMINANT) {
+                btn.style.background = 'var(--primary)';
+                btn.style.color = 'white';
+                icon.textContent = '🎯';
+                text.textContent = 'Enfoque: Top 2 Segmentos';
+            } else {
+                btn.style.background = 'white';
+                btn.style.color = 'var(--text-main)';
+                icon.textContent = '👁️';
+                text.textContent = 'Ver todos los segmentos';
+            }
+
+            renderAnalysis();
+        }
+
+        // ==================== RENDER SUMMARY INTEGRATED ====================
+        // ==================== GENERACIÓN DE INSIGHTS NARRATIVOS ====================
+        function getUEInsight(ueKey, empCov, empRealCount, bCl, bClCount, bFo, bGr, metas) {
+            const ueName = ueKey === 'RYD' ? 'ESCUELAS Y PRÁCTICA LIBRE' : ueKey;
+            const { metaSector, metaGrandes, metaFoco } = metas;
+
+            // Análisis Universal: Promedio de los 3 benchmarks
+            const avgMarketCov = (bCl + bFo + bGr) / 3;
+            const gapMarket = avgMarketCov > 0 ? ((empCov - avgMarketCov) / avgMarketCov * 100) : 0;
+
+            let text = "";
+            let accentColor = "#64748b";
+
+            const isAboveSector = empRealCount >= metaSector;
+            const isAboveGrandes = empRealCount >= metaGrandes;
+            const isAboveFoco = empRealCount >= metaFoco;
+            const surpassedBenchmarks = [isAboveSector, isAboveGrandes, isAboveFoco].filter(x => x).length;
+
+            // Lógica de color basada en el desempeño frente al mercado total
+            if (surpassedBenchmarks === 3) accentColor = "#059669"; // Verde (Líder)
+            else if (surpassedBenchmarks >= 1) accentColor = "#2563eb"; // Azul (Alineado/Creciendo)
+            else accentColor = "#dc2626"; // Rojo (Rezago)
+
+            text = `Tu cobertura en ${ueName} es de <strong>${empCov.toFixed(1)}%</strong>. `;
+
+            if (surpassedBenchmarks === 3) {
+                text += `<strong>¡Felicidades!</strong> Eres líder absoluto, superando los tres benchmarks de mercado (Sector: ${bCl.toFixed(1)}%, Foco: ${bFo.toFixed(1)}%, Grandes: ${bGr.toFixed(1)}%). `;
+                const surplusSector = empRealCount - metaSector;
+                text += `Actualmente operas con un excedente de <strong>${surplusSector.toLocaleString()} consumos</strong> sobre el promedio de tu Sector.`;
+            } else if (surpassedBenchmarks === 0) {
+                text += `Te encuentras en una etapa de oportunidad, con una brecha del <strong>${Math.abs(gapMarket).toFixed(1)}%</strong> respecto al potencial promedio de mercado (<strong>${avgMarketCov.toFixed(1)}%</strong>). `;
+            } else {
+                text += `Muestras un desempeño competitivo, superando ${surpassedBenchmarks === 2 ? 'dos de los tres' : 'a uno de los'} referentes de mercado. `;
+                text += `Tu posición actual es de un <strong>${gapMarket >= 0 ? '+' : ''}${gapMarket.toFixed(1)}%</strong> respecto al promedio global de la industria (<strong>${avgMarketCov.toFixed(1)}%</strong>). `;
+            }
+
+            if (surpassedBenchmarks < 3) {
+                const hitos = [];
+                if (!isAboveSector) hitos.push(`alcanzar al Sector (<strong>${metaSector.toLocaleString()}</strong>)`);
+                if (!isAboveFoco) hitos.push(`llegar a Meta Foco (<strong>${metaFoco.toLocaleString()}</strong>)`);
+                if (!isAboveGrandes) hitos.push(`igualar a las Grandes (<strong>${metaGrandes.toLocaleString()}</strong>)`);
+
+                if (hitos.length > 0) {
+                    text += `<br/><br/>Para consolidar tu liderazgo, tus hitos de crecimiento son: ${hitos.join(', ')}. `;
+                }
+            }
+
+            // Nota eliminada por solicitud del usuario
+
+            return `<div style="margin-top: 1rem; padding: 1rem; background: #fafafa; border: 1px solid #f1f5f9; border-left: 4px solid ${accentColor}; border-radius: 8px; font-size: 0.72rem; line-height: 1.5; color: #334155;">
+                <span style="display: block; font-weight: 800; color: ${accentColor}; margin-bottom: 0.25rem; text-transform: uppercase; font-size: 0.6rem; letter-spacing: 0.05em;">Análisis de Posicionamiento Universal</span>
+                ${text}
+            </div>`;
+        }
+
+        window.toggleAnalysisPanel = function (panelId, btnId) {
+            const panel = document.getElementById(panelId);
+            const btn = document.getElementById(btnId);
+            const isDetailed = btnId.includes('btn-bench') || btnId.includes('btn-ue') || btnId.includes('btn-detail');
+            const isMetodologia = btnId === 'btn-toggle-metodologia';
+
+            if (panel.classList.contains('hidden')) {
+                panel.classList.remove('hidden');
+                if (isMetodologia) btn.innerHTML = '<span>📖</span> Ocultar Explicación ▴';
+                else btn.innerHTML = isDetailed ? 'Ocultar análisis detallado ▴' : 'Ocultar análisis ▴';
+            } else {
+                panel.classList.add('hidden');
+                if (isMetodologia) btn.innerHTML = '<span>📖</span> Ver Explicación ▾';
+                else btn.innerHTML = isDetailed ? 'Ver análisis detallado ▾' : 'Ver análisis ▾';
+            }
+        };
+
+        function renderSummaryIntegrated() {
+            const company = datosFichaCompleta.Empresas[CURRENT_COMPANY];
+            const benchmarks = datosFichaCompleta.Benchmarks || {};
+            const summaryDiv = document.getElementById('ue-summary-integrated');
+            summaryDiv.innerHTML = '';
+
+            const UES_LIST = ["VIVIENDA", "HOTELES", "PISCILAGO", "RYD"];
+
+            UES_LIST.forEach(ue => {
+                const ueCons = company.Consumos[ue] || {};
+                const total2024 = Object.keys(ueCons).filter(k => k.startsWith('2024_')).reduce((sum, k) => sum + ueCons[k], 0);
+                const total2025 = Object.keys(ueCons).filter(k => k.startsWith('2025_')).reduce((sum, k) => sum + ueCons[k], 0);
+                const variacion = total2024 > 0 ? (((total2025 - total2024) / total2024) * 100).toFixed(1) : (total2025 > 0 ? 100 : 0);
+                const coberturaGeneral = ((total2025 / company.Total) * 100);
+
+                const getBenchUEData = (bKey) => {
+                    const bData = benchmarks[bKey];
+                    if (!bData || bData.Total === 0) return { pct: 0, count: 0 };
+                    const bCons = bData.Consumos?.[ue] || {};
+                    const bTotalCons = Object.keys(bCons).filter(k => k.startsWith('2025_')).reduce((sum, k) => sum + bCons[k], 0);
+                    return {
+                        pct: (bTotalCons / bData.Total * 100),
+                        count: bTotalCons
+                    };
+                };
+
+                const bGr = getBenchUEData("BENCHMARK_GRANDES");
+                const bFo = getBenchUEData("BENCHMARK_FOCO");
+                const bCl = getBenchUEData(`BENCHMARK_CLUSTER_${company.Cluster}`);
+
+                const card = document.createElement('div');
+                card.className = 'ue-mini-card';
+
+                // Formateo de benchmark compactos
+                const renderCompactBench = (label, bData) => {
+                    const diff = coberturaGeneral - bData.pct;
+                    const icon = diff >= 0 ? '▲' : '▼';
+                    const color = diff >= 0 ? 'var(--success)' : 'var(--danger)';
+                    const meta = Math.round(company.Total * bData.pct / 100);
+                    return `
+                        <div style="display: flex; justify-content: space-between; align-items: baseline; font-size: 0.6rem; margin-top: 0.2rem;">
+                            <span style="color: var(--text-muted); font-weight: 600;">vs ${label}:</span>
+                            <span style="font-weight: 700; color: ${color};">
+                                ${icon} ${Math.abs(diff).toFixed(1)}% 
+                                <span style="font-weight: 500; color: var(--text-muted); font-size: 0.55rem;">
+                                    (${bData.pct.toFixed(2)}% | Meta: ${meta.toLocaleString()} emp)
+                                </span>
+                            </span>
+                        </div>
+                    `;
+                };
+
+                card.innerHTML = `
+                    <div class="ue-mini-header">
+                        <div class="ue-mini-title">${ue === 'RYD' ? 'ESCUELAS Y PRÁCTICA LIBRE' : ue}</div>
+                        <div style="font-size: 0.75rem; font-weight: 700; color: ${variacion >= 0 ? '#15803d' : '#b91c1c'};">
+                            ${variacion >= 0 ? '▲' : '▼'} ${Math.abs(variacion)}%
+                        </div>
+                    </div>
+                    <div class="ue-mini-stats">
+                        <div class="ue-stat-box">
+                            <div style="color: var(--text-muted);">2024</div>
+                            <div class="ue-stat-val">${total2024.toLocaleString()}</div>
+                        </div>
+                        <div class="ue-stat-box">
+                            <div style="color: var(--text-muted);">2025</div>
+                            <div class="ue-stat-val" style="color: var(--primary);">${total2025.toLocaleString()}</div>
+                        </div>
+                    </div>
+                    <div style="margin-top: 0.5rem; border-top: 1px solid var(--border); padding-top: 0.5rem;">
+                        <div style="display: flex; justify-content: space-between; font-size: 0.65rem; margin-bottom: 0.3rem;">
+                            <span style="font-weight: 600;">Cobertura 2025:</span>
+                            <span style="font-weight: 800; color: var(--primary);">${coberturaGeneral.toFixed(1)}%</span>
+                        </div>
+                        ${renderCompactBench('Sect', bCl)}
+                        ${renderCompactBench('Foco', bFo)}
+                        ${renderCompactBench('Gran', bGr)}
+                    </div>
+                `;
+                summaryDiv.appendChild(card);
+            });
+        }
+
+        // ==================== RENDER CHART ====================
+        function renderComparisonChart() {
+            // removida
+        }
+    </script>
+</body>
+
+</html>
