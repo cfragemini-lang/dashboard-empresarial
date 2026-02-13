@@ -1365,40 +1365,43 @@
 
             if (!input) return;
 
-            // Iniciar estado de carga
+            // Iniciar estado de carga visual
             const originalBtnText = btn.innerHTML;
             btn.disabled = true;
-            btn.innerHTML = '<span class="spinner" style="display:inline-block; width:12px; height:12px; border:2px solid #fff; border-top-color:transparent; border-radius:50%; animation:spin 0.8s linear infinite; margin-right:8px;"></span> Procesando...';
+            btn.innerHTML = '<span class="spinner" style="display:inline-block; width:12px; height:12px; border:2px solid #fff; border-top-color:transparent; border-radius:50%; animation:spin 0.8s linear infinite; margin-right:8px;"></span> Procesando datos...';
             errorDiv.style.display = 'none';
 
-            try {
-                const hashedInput = await hashPassword(input);
+            // Forzar el renderizado antes de la tarea pesada
+            setTimeout(async () => {
+                try {
+                    const hashedInput = await hashPassword(input);
 
-                if (hashedInput === DASHBOARD_HASH) {
-                    if (typeof datosFichaEncrypted === 'undefined') {
-                        throw new Error("No se cargaron los datos. Refresca con CTRL+F5.");
-                    }
+                    if (hashedInput === DASHBOARD_HASH) {
+                        if (typeof datosFichaEncrypted === 'undefined') {
+                            throw new Error("No se cargaron los datos. Refresca con CTRL+F5.");
+                        }
 
-                    const decrypted = await decryptData(datosFichaEncrypted, input);
+                        const decrypted = await decryptData(datosFichaEncrypted, input);
 
-                    if (decrypted) {
-                        datosFichaCompleta = decrypted;
-                        sessionStorage.setItem('dashboard_access', 'true');
-                        sessionStorage.setItem('dashboard_key', input);
-                        unlockDashboard();
+                        if (decrypted) {
+                            datosFichaCompleta = decrypted;
+                            sessionStorage.setItem('dashboard_access', 'true');
+                            sessionStorage.setItem('dashboard_key', input);
+                            unlockDashboard();
+                        } else {
+                            throw new Error("Clave válida pero error al descifrar. ¿Archivo corrupto?");
+                        }
                     } else {
-                        throw new Error("Clave válida pero error al descifrar. ¿Archivo corrupto?");
+                        throw new Error("🔑 Clave incorrecta. Reintenta.");
                     }
-                } else {
-                    throw new Error("🔑 Clave incorrecta. Reintenta.");
+                } catch (e) {
+                    errorDiv.textContent = e.message.includes("🔑") ? e.message : "⚠️ " + e.message;
+                    errorDiv.style.display = 'block';
+                    btn.disabled = false;
+                    btn.innerHTML = originalBtnText;
+                    if (e.message.includes("incorrecta")) document.getElementById('password-input').value = '';
                 }
-            } catch (e) {
-                errorDiv.textContent = e.message.includes("🔑") ? e.message : "⚠️ " + e.message;
-                errorDiv.style.display = 'block';
-                btn.disabled = false;
-                btn.innerHTML = originalBtnText;
-                if (e.message.includes("incorrecta")) document.getElementById('password-input').value = '';
-            }
+            }, 50);
         }
 
         function unlockDashboard() {
