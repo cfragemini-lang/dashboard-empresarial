@@ -129,9 +129,11 @@ def main():
         print(f"  ⚠️  Error cargando clusters: {e}")
         print("  Continuando sin clusters...")
     
-    # 1. MAPEAREMOS CONSUMIDORES ÚNICOS
-    # key: ID_PERSONA -> { UE: { Year: set(Details) } }
+    # 1. MAPEAREMOS CONSUMIDORES Y DETALLES POR NIT
+    # consumidores: persona_id -> { UE: { Year: set(Details) } }
     consumidores = defaultdict(lambda: defaultdict(lambda: defaultdict(set)))
+    # detalles_por_nit: nit_empresa -> { UE: { Year: { Detail: Count } } }
+    detalles_por_nit = defaultdict(lambda: defaultdict(lambda: defaultdict(lambda: defaultdict(int))))
     
     for ue in UES:
         path = os.path.join(CONSUMPTION_DIR, f"{ue}.csv")
@@ -140,50 +142,65 @@ def main():
             continue
             
         print(f"Leyendo consumos de {ue}...")
+        
+        # Mapeo de columnas por UE
+        # NIT_COL: ID_EMPRESA (ej: NIT8001661811)
+        # DET_COL: Detalle táctico (Proyecto, Resort, etc.)
+        nit_col = 15
+        det_col = 4
+        if ue == "VIVIENDA":
+            nit_col = 16
+            det_col = 4
+        elif ue == "RYD":
+            nit_col = 20
+            det_col = 6 # CATEGORIA_1
+        elif ue == "PISCILAGO":
+            nit_col = 15
+            det_col = 3 # CANAL
+        elif ue == "MEDICAMENTOS":
+            nit_col = 15
+            det_col = 6 # NOMBRE_JERARQUIA2
+
         try:
             with open(path, 'r', encoding='latin-1') as f:
                 reader = csv.reader(f, delimiter=',')
                 next(reader) # header
                 for row in reader:
-                    if len(row) < 4: continue
-                    persona_id = row[1].strip() # Index 1: ID_PERSONA
-                    fecha = row[0].strip() # Index 0: FECHA
+                    if len(row) <= max(nit_col, det_col): continue
                     
-                    if persona_id and fecha:
-                        # Normalizar ID
+                    persona_id = row[1].strip()
+                    fecha = row[0].strip()
+                    nit_emp = row[nit_col].strip()
+                    detail = clean_encoding(row[det_col].strip())
+                    
+                    if not fecha: continue
+                    year = fecha[:4]
+                    if year not in ["2024", "2025"]: continue
+                    
+                    # 1.1 Para Cobertura Total (Persona)
+                    if persona_id:
                         if not persona_id.startswith('CC'):
                             persona_id = f"CC{persona_id}"
-                        
-                        year = fecha[:4]
-                        if year in ["2024", "2025"]:
-                            # Extraer detalle según UE
-                            detail = "General"
-                            try:
-                                if ue == "VIVIENDA": detail = row[4].strip() # NOMBRE_PROYECTO
-                                elif ue == "HOTELES": detail = row[4].strip() # RESORT
-                                elif ue == "PISCILAGO": detail = row[3].strip() # CANAL
-                                elif ue == "RYD": detail = row[7].strip() # CATEGORIA_2
-                            except IndexError:
-                                pass
-                                
-                            if detail:
-                                consumidores[persona_id][ue][year].add(detail)
+                        consumidores[persona_id][ue][year].add(detail)
+                    
+                    # 1.2 Para Detalle Táctico (Empresa)
+                    if nit_emp and detail:
+                        detalles_por_nit[nit_emp][ue][year][detail] += 1
 
         except Exception as e:
             print(f"Error en {ue}: {e}")
 
-    print(f"{len(consumidores):,} consumidores únicos mapeados.")
+    print(f"{len(consumidores):,} consumidores y {len(detalles_por_nit):,} empresas con detalle mapeadas.")
 
     # 2. PROCESAREMOS EL ARCHIVO GRANDE (1.2GB)
-    # data: { Total, Segmentos, Consumos, NIT, etc. }
     empresas = defaultdict(lambda: {
         "Total": 0, "NIT": "", "Piramide": "", "Foco": "", "Cluster": "",
         "Segmentos": defaultdict(int),
         "Edades": defaultdict(int),
         "Salarios": defaultdict(int),
         "Categorias": defaultdict(int),
-        "Consumos": defaultdict(lambda: defaultdict(int)), # [UE][Year_Segment]
-        "DetallesUE": defaultdict(lambda: defaultdict(lambda: defaultdict(int))) # [UE][Year][Detail]
+        "Consumos": defaultdict(lambda: defaultdict(int)),
+        "DetallesUE": defaultdict(lambda: defaultdict(lambda: defaultdict(int)))
     })
 
     # Benchmarks
@@ -198,8 +215,6 @@ def main():
 
     print(f"Leyendo demografía: {DEMOGRAPHIC_FILE}")
     
-    # Para el archivo de 1.2GB, leerlo línea a línea es vital
-    # Intentamos detectar encoding rápidamente
     try:
         with open(DEMOGRAPHIC_FILE, 'r', encoding='utf-8-sig') as f:
             f.readline()
@@ -225,42 +240,28 @@ def main():
                 emp_name = clean_encoding(row[51].strip())
                 if not emp_name: continue
                 
-                persona_id = row[0].strip() # Index 0: ID_PERSONA
-                seg = clean_encoding(row[12].strip()) or "Otros" # Index 12: SEGMENTO_POBLACIONAL
-                nit = row[26].strip() # Index 26: NIT
-                id_empresa = row[25].strip() # Index 25: ID_EMPRESA
+                persona_id = row[0].strip() 
+                seg = clean_encoding(row[12].strip()) or "Otros"
+                id_empresa = row[25].strip() # NIT con prefijo (Ej: NIT8001661811)
+                nit_num = row[26].strip()
                 rango_edad = clean_encoding(row[7].strip()) or "N/D"
-                # Categoría y Salario
                 categoria = clean_encoding(row[1].strip()) or "N/D"
                 rango_salarial = clean_encoding(row[8].strip()) or "N/D"
                 
-                # Mapeo de valores de Salario (SMLV)
-                # Basado en los rangos observados en los datos
                 SALARY_MAP = {
-                    "Entre 1 y 1.5 SMLV": 1.25,
-                    "Entre 1.5 y 2 SMLV": 1.75,
-                    "Entre 2 y 2.5 SMLV": 2.25,
-                    "Entre 2.5 y 3 SMLV": 2.75,
-                    "Entre 3 y 4 SMLV": 3.5,
-                    "Entre 4 y 6 SMLV": 5.0,
-                    "Entre 6 y 8 SMLV": 7.0,
-                    "Entre 8 y 10 SMLV": 9.0,
-                    "Entre 10 y 20 SMLV": 15.0,
-                    "Entre 20 y 30 SMLV": 25.0,
-                    "Menor al SMLV": 0.8,
-                    "Mayor a 30 SMLV": 35.0
+                    "Entre 1 and 1.5 SMLV": 1.25, "Entre 1.5 and 2 SMLV": 1.75, "Entre 2 and 2.5 SMLV": 2.25,
+                    "Entre 2.5 and 3 SMLV": 2.75, "Entre 3 and 4 SMLV": 3.5, "Entre 4 and 6 SMLV": 5.0,
+                    "Entre 6 and 8 SMLV": 7.0, "Entre 8 and 10 SMLV": 9.0, "Entre 10 and 20 SMLV": 15.0,
+                    "Entre 20 and 30 SMLV": 25.0, "Menor al SMLV": 0.8, "Mayor a 30 SMLV": 35.0
                 }
-                
-                salary_value = SALARY_MAP.get(rango_salarial, 0)
+                salary_value = SALARY_MAP.get(rango_salarial.replace('y', 'and'), 0)
                 
                 target = empresas[emp_name]
                 if not target["NIT"]:
-                    target["NIT"] = nit
+                    target["NIT"] = id_empresa # Guardamos el ID_EMPRESA (NIT...) para el link final
                     target["Piramide"] = clean_encoding(row[69].strip())
                     target["Foco"] = row[72].strip()
-                    # Obtener cluster del mapa
                     target["Cluster"] = cluster_map.get(id_empresa, "General")
-                    # Inicializar acumuladores de salario
                     target["SalarySum"] = 0
                     target["SalaryCount"] = 0
                 
@@ -274,12 +275,9 @@ def main():
                     target["SalarySum"] += salary_value
                     target["SalaryCount"] += 1
                 
-                # Benchmarking Groups
                 groups = ["SISTEMA_TOTAL"]
                 if target["Piramide"] == "1 Grandes": groups.append("BENCHMARK_GRANDES")
                 if target["Foco"] == "X": groups.append("BENCHMARK_FOCO")
-                
-                # REFINADO: Solo incluir en benchmark de cluster si es pirámide Grandes o Medianas
                 if target["Cluster"] and target["Piramide"] in ["1 Grandes", "2 Medianas"]:
                     groups.append(f"BENCHMARK_CLUSTER_{target['Cluster']}")
 
@@ -289,33 +287,31 @@ def main():
                     benchmarks[g]["Edades"][rango_edad] += 1
                     benchmarks[g]["Salarios"][rango_salarial] += 1
                     benchmarks[g]["Categorias"][categoria] += 1
-                    
                     if "SalarySum" not in benchmarks[g]:
                         benchmarks[g]["SalarySum"] = 0
                         benchmarks[g]["SalaryCount"] = 0
-                    
                     if salary_value > 0:
                         benchmarks[g]["SalarySum"] += salary_value
                         benchmarks[g]["SalaryCount"] += 1
 
-                # Cruce de Consumos
+                # Cruce de Consumos (Persona para Cobertura)
                 pers_cons = consumidores.get(persona_id)
                 if pers_cons:
                     for ue, year_data in pers_cons.items():
-                        for yr, details in year_data.items():
+                        for yr in year_data.keys():
                             key = f"{yr}_{seg}"
                             target["Consumos"][ue][key] += 1
-                            
-                            # Agregar detalles tácticos
-                            for d in details:
-                                target["DetallesUE"][ue][yr][d] += 1
-                            
                             for g in groups:
                                 benchmarks[g]["Consumos"][ue][key] += 1
 
+            # ASIGNACIÓN FINAL DE DETALLES POR NIT (Robusto)
+            for emp_name, target in empresas.items():
+                nit = target["NIT"]
+                if nit in detalles_por_nit:
+                    target["DetallesUE"] = detalles_por_nit[nit]
+
     except Exception as e:
         print(f"Error en demografía: {e}")
-        return
 
     # 3. GUARDAR RESULTADOS
     print("Guardando resultados...")
