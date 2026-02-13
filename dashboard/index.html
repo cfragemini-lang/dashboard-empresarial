@@ -949,9 +949,10 @@
     <!-- Pantalla de Login -->
     <div id="login-screen">
         <div class="login-card">
-            <div
-                style="font-size: 3.5rem; margin-bottom: 1.5rem; filter: drop-shadow(0 0 10px rgba(59, 130, 246, 0.5));">
-                🛡️</div>
+            <div style="margin-bottom: 2rem;">
+                <img src="logo.png" alt="Colsubsidio Logo"
+                    style="width: 220px; filter: drop-shadow(0 0 10px rgba(255,255,255,0.2));">
+            </div>
             <h1>Dashboard Corporativo</h1>
             <p>Acceso restringido. Por favor ingresa la clave de seguridad para continuar.</p>
             <input type="password" id="password-input" class="login-input" placeholder="••••••••" autofocus>
@@ -959,13 +960,16 @@
             <div id="login-error" class="login-error">🔑 Clave incorrecta. Reintenta.</div>
         </div>
     </div>
-    <header>
-        <button class="theme-toggle" onclick="toggleTheme()" id="theme-toggle">
+    <header style="display: flex; align-items: center; justify-content: center; gap: 2rem; position: relative;">
+        <img src="logo.png" alt="Colsubsidio" style="height: 45px; filter: brightness(0) invert(1);">
+        <div style="text-align: left;">
+            <h1 style="margin:0">📊 Ficha Técnica Empresarial</h1>
+            <p style="margin:0; opacity: 0.9;">Análisis Completo de Cobertura por Segmento Poblacional</p>
+        </div>
+        <button class="theme-toggle" onclick="toggleTheme()" id="theme-toggle" style="position: absolute; right: 2rem;">
             <span class="theme-toggle-icon" id="theme-icon">🌙</span>
             <span id="theme-text">Modo Oscuro</span>
         </button>
-        <h1>📊 Ficha Técnica Empresarial</h1>
-        <p>Análisis Completo de Cobertura por Segmento Poblacional</p>
     </header>
 
     <div id="loading">Cargando datos...</div>
