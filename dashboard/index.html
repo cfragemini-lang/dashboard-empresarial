@@ -1293,17 +1293,17 @@
     </div> <!-- Fin de #main-content -->
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
-    <script src="datos/datos_ficha_completa.js"></script>
+    <!-- Carga del archivo consolidado único -->
     <script src="../datos/datos_ficha_completa.js"></script>
     <script>
         // ==================== GLOBALS ====================
-        let datosFichaCompleta = null; // Se llenará tras el descifrado
+        let datosFichaCompleta = null;
         let CURRENT_COMPANY = null;
         let CURRENT_COMPANY_2 = null;
         let CURRENT_UE = "VIVIENDA";
-        let CURRENT_SEGMENT = "Básico"; // Default
+        let CURRENT_SEGMENT = "Básico";
         let CURRENT_COMP_BENCH = "CLUSTER";
-        let CURRENT_COMP_MODE = "BENCHMARK"; // "BENCHMARK" or "COMPANY"
+        let CURRENT_COMP_MODE = "BENCHMARK";
         let SHOW_ONLY_PREDOMINANT = false;
 
         // ==================== INITIALIZATION ====================
@@ -1311,7 +1311,9 @@
 
         async function decryptData(encryptedBase64, password) {
             try {
+                if (!encryptedBase64) return null;
                 const combined = CryptoJS.enc.Base64.parse(encryptedBase64);
+                if (combined.sigBytes < 32) return null;
 
                 // Extraer Salt (16 bytes), IV (16 bytes) y Ciphertext
                 const salt = CryptoJS.lib.WordArray.create(combined.words.slice(0, 4), 16);
@@ -1335,8 +1337,7 @@
                 );
 
                 const plaintext = decrypted.toString(CryptoJS.enc.Utf8);
-                if (!plaintext) return null;
-                return JSON.parse(plaintext);
+                return plaintext ? JSON.parse(plaintext) : null;
             } catch (e) {
                 console.error("Error descifrando:", e);
                 return null;
@@ -1357,15 +1358,19 @@
             const hashedInput = await hashPassword(input);
 
             if (hashedInput === DASHBOARD_HASH) {
-                // Intentar descifrar
+                if (typeof datosFichaEncrypted === 'undefined') {
+                    errorDiv.textContent = "❌ Error crítico: No se cargaron los datos. Refresca con CTRL+F5.";
+                    errorDiv.style.display = 'block';
+                    return;
+                }
                 const decrypted = await decryptData(datosFichaEncrypted, input);
                 if (decrypted) {
                     datosFichaCompleta = decrypted;
                     sessionStorage.setItem('dashboard_access', 'true');
-                    sessionStorage.setItem('dashboard_key', input); // Guardar temporalmente para F5
+                    sessionStorage.setItem('dashboard_key', input);
                     unlockDashboard();
                 } else {
-                    errorDiv.textContent = "⚠️ Error al descifrar datos. Verifica la clave.";
+                    errorDiv.textContent = "⚠️ Clave válida pero error al descifrar. ¿Archivo corrupto?";
                     errorDiv.style.display = 'block';
                 }
             } else {
@@ -1382,7 +1387,6 @@
             setupEventListeners();
         }
 
-        // Permitir entrar con la tecla Enter
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Enter' && document.getElementById('login-screen').style.display !== 'none') {
                 checkPassword();
@@ -1390,15 +1394,17 @@
         });
 
         window.addEventListener('DOMContentLoaded', async () => {
-            // Inicializar tema guardado
             initTheme();
+            console.log("🚀 Dashboard cargado. Verificando datos...");
 
-            if (typeof datosFichaEncrypted === 'undefined' || !datosFichaEncrypted) {
-                document.getElementById('loading').textContent = 'Error: No se pudieron cargar los datos cifrados.';
+            if (typeof datosFichaEncrypted === 'undefined') {
+                console.error("❌ El archivo de datos no se cargó correctamente.");
+                document.getElementById('loading').innerHTML = '<span style="color:var(--danger)">⚠️ Error: Los datos no están disponibles. Sube el archivo datos_ficha_completa.js a la carpeta /datos.</span>';
                 return;
             }
 
-            // Verificar si ya tiene sesión activa
+            console.log("✅ Datos detectados correctamente.");
+
             if (sessionStorage.getItem('dashboard_access') === 'true') {
                 const savedKey = sessionStorage.getItem('dashboard_key');
                 if (savedKey) {
@@ -1406,12 +1412,9 @@
                     if (decrypted) {
                         datosFichaCompleta = decrypted;
                         unlockDashboard();
-                    } else {
-                        sessionStorage.clear();
                     }
                 }
             }
-
             document.getElementById('loading').classList.add('hidden');
         });
 

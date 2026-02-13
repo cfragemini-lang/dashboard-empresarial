@@ -358,11 +358,12 @@ def main():
     encrypted_payload = encrypt_data(json_str, PASSWORD_DASHBOARD)
 
     with open(OUTPUT_FILE, 'w', encoding='utf-8') as f:
-        f.write("const datosFichaEncrypted = \"")
+        # Usamos 'var' para asegurar alcance global en el navegador
+        f.write("var datosFichaEncrypted = \"")
         f.write(encrypted_payload)
         f.write("\";")
 
-    print(f"Proceso completado. Datos guardados en {OUTPUT_FILE}")
+    print(f"Proceso completado. Archivo único generado: {OUTPUT_FILE} ({os.path.getsize(OUTPUT_FILE)/1024/1024:.2f} MB)")
 
 if __name__ == "__main__":
     main()
