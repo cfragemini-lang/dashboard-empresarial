@@ -357,25 +357,12 @@ def main():
     json_str = json.dumps(output_data, ensure_ascii=False)
     encrypted_payload = encrypt_data(json_str, PASSWORD_DASHBOARD)
 
-    # Dividir el payload en trozos de 5MB (aprox 5,000,000 caracteres)
-    chunk_size = 5 * 1024 * 1024
-    chunks = [encrypted_payload[i:i + chunk_size] for i in range(0, len(encrypted_payload), chunk_size)]
-    
-    # Escribir los trozos en archivos separados
-    base_dir = os.path.dirname(OUTPUT_FILE)
-    for i, chunk in enumerate(chunks):
-        chunk_file = os.path.join(base_dir, f"datos_chunk_{i+1}.js")
-        with open(chunk_file, 'w', encoding='utf-8') as f:
-            f.write(f"var datosFichaEncrypted_{i+1} = \"")
-            f.write(chunk)
-            f.write("\";")
-        print(f"  ✓ Fragmento {i+1} guardado ({len(chunk)/1024/1024:.1f} MB)")
-
-    # Crear un archivo maestro que indique cuántos fragmentos hay
     with open(OUTPUT_FILE, 'w', encoding='utf-8') as f:
-        f.write(f"const totalDataChunks = {len(chunks)};")
+        f.write("const datosFichaEncrypted = \"")
+        f.write(encrypted_payload)
+        f.write("\";")
 
-    print(f"Proceso completado. Datos divididos en {len(chunks)} fragmentos en {base_dir}")
+    print(f"Proceso completado. Datos guardados en {OUTPUT_FILE}")
 
 if __name__ == "__main__":
     main()

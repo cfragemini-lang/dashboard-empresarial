@@ -1293,8 +1293,7 @@
     </div> <!-- Fin de #main-content -->
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
-    <!-- Cargador Maestro de Datos -->
-    <script id="data-master" src="datos/datos_ficha_completa.js"></script>
+    <script src="datos/datos_ficha_completa.js"></script>
     <script src="../datos/datos_ficha_completa.js"></script>
     <script>
         // ==================== GLOBALS ====================
@@ -1342,64 +1341,6 @@
                 console.error("Error descifrando:", e);
                 return null;
             }
-        }
-
-        async function loadAllChunks() {
-            if (typeof totalDataChunks === 'undefined') {
-                console.error("❌ Error: 'totalDataChunks' no definido. ¿Subiste el archivo datos_ficha_completa.js?");
-                return false;
-            }
-
-            let combined = "";
-
-            // Buscar cuál de los dos scripts de datos cargó correctamente
-            const allScripts = Array.from(document.querySelectorAll('script'));
-            const masterScript = allScripts.find(s => s.src.includes('datos_ficha_completa.js'));
-
-            if (!masterScript) {
-                console.error("❌ No se encontró el script maestro de datos.");
-                return false;
-            }
-
-            const masterPath = masterScript.src;
-            const basePath = masterPath.substring(0, masterPath.lastIndexOf('/') + 1);
-            const cacheBuster = `?v=${new Date().getTime()}`;
-
-            console.log(`🚀 Iniciando carga de ${totalDataChunks} fragmentos desde ${basePath}...`);
-
-            for (let i = 1; i <= totalDataChunks; i++) {
-                await new Promise((resolve) => {
-                    const script = document.createElement('script');
-                    script.src = `${basePath}datos_chunk_${i}.js${cacheBuster}`;
-                    script.async = false;
-                    script.onload = () => {
-                        const chunkKey = `datosFichaEncrypted_${i}`;
-                        const chunkData = window[chunkKey];
-                        if (chunkData) {
-                            combined += chunkData;
-                            console.log(`  ✅ Fragmento ${i} cargado: ${chunkData.length.toLocaleString()} caracteres.`);
-                            delete window[chunkKey]; // Liberar memoria
-                        } else {
-                            console.error(`  ❌ Fragmento ${i} cargado pero está vacío o mal definido.`);
-                        }
-                        resolve();
-                    };
-                    script.onerror = () => {
-                        console.error(`  ❌ Error fatal: No se pudo descargar el fragmento ${i}.`);
-                        resolve();
-                    };
-                    document.head.appendChild(script);
-                });
-            }
-
-            if (combined.length === 0) {
-                console.error("❌ Error: No se recolectó ningún dato cifrado.");
-                return false;
-            }
-
-            console.log(`📦 Datos totales reensamblados: ${combined.length.toLocaleString()} caracteres.`);
-            window.datosFichaEncrypted = combined;
-            return true;
         }
 
         async function hashPassword(password) {
@@ -1452,11 +1393,8 @@
             // Inicializar tema guardado
             initTheme();
 
-            // Cargar fragmentos antes de permitir el login
-            await loadAllChunks();
-
             if (typeof datosFichaEncrypted === 'undefined' || !datosFichaEncrypted) {
-                document.getElementById('loading').textContent = 'Error: No se pudieron cargar los fragmentos de datos cifrados.';
+                document.getElementById('loading').textContent = 'Error: No se pudieron cargar los datos cifrados.';
                 return;
             }
 
