@@ -175,7 +175,12 @@ def main():
                     
                     if not fecha: continue
                     year = fecha[:4]
-                    if year not in ["2024", "2025"]: continue
+                    if year not in ["2024", "2025", "2026"]: continue
+                    
+                    # Limpiar NIT: Quitar decimales si vienen como float (.0)
+                    nit_emp = nit_emp.split('.')[0]
+                    if nit_emp and not nit_emp.startswith('NIT'):
+                        nit_emp = f"NIT{nit_emp}"
                     
                     # 1.1 Para Cobertura Total (Persona)
                     if persona_id:
@@ -242,8 +247,12 @@ def main():
                 
                 persona_id = row[0].strip() 
                 seg = clean_encoding(row[12].strip()) or "Otros"
-                id_empresa = row[25].strip() # NIT con prefijo (Ej: NIT8001661811)
-                nit_num = row[26].strip()
+                id_empresa = row[25].strip() 
+                nit_num = row[26].strip().split('.')[0] # Limpiar decimales
+                if nit_num and not nit_num.startswith('NIT'):
+                    nit_num = f"NIT{nit_num}"
+                
+                # Usar nit_num para el cluster si id_empresa falla
                 rango_edad = clean_encoding(row[7].strip()) or "N/D"
                 categoria = clean_encoding(row[1].strip()) or "N/D"
                 rango_salarial = clean_encoding(row[8].strip()) or "N/D"
