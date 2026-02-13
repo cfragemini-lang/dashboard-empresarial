@@ -18,7 +18,7 @@ from cryptography.hazmat.primitives import padding
 DEMOGRAPHIC_FILE = r"C:\Users\crisrojagu\Documents\Cruces_col\Cruces_col\data\COLSUBSIDIO_LT_CV_IDN_CONSOLIDACION_FINAL_SEGM.csv"
 EMPRESAS_SEGM_FILE = r"C:\Users\crisrojagu\Documents\Cruces_col\Cruces_col\data\COLSUBSIDIO_LT_CV_IDN_LIST_EMPRESAS_SEGM.csv"
 CONSUMPTION_DIR = r"C:\Users\crisrojagu\Documents\Consumos\data"
-OUTPUT_FILE = r"C:\Users\crisrojagu\Documents\Proy_65\ficha_empresarial\datos\datos_ficha_completa.js"
+OUTPUT_FILE = r"C:\Users\crisrojagu\Documents\Proy_65\ficha_empresarial\datos\datos_ficha_v2.js"
 PASSWORD_DASHBOARD = "Bi2026_*"
 
 # UEs
