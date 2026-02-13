@@ -1434,16 +1434,6 @@
 
             console.log("✅ Datos detectados correctamente.");
 
-            if (sessionStorage.getItem('dashboard_access') === 'true') {
-                const savedKey = sessionStorage.getItem('dashboard_key');
-                if (savedKey) {
-                    const decrypted = await decryptData(datosFichaEncrypted, savedKey);
-                    if (decrypted) {
-                        datosFichaCompleta = decrypted;
-                        unlockDashboard();
-                    }
-                }
-            }
             document.getElementById('loading').classList.add('hidden');
         });
 
