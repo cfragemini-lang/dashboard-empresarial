@@ -130,8 +130,8 @@ def main():
         print("  Continuando sin clusters...")
     
     # 1. MAPEAREMOS CONSUMIDORES ÚNICOS
-    # key: ID_PERSONA -> { UE: set(Years) }
-    consumidores = defaultdict(lambda: defaultdict(set))
+    # key: ID_PERSONA -> { UE: { Year: set(Details) } }
+    consumidores = defaultdict(lambda: defaultdict(lambda: defaultdict(set)))
     
     for ue in UES:
         path = os.path.join(CONSUMPTION_DIR, f"{ue}.csv")
@@ -145,17 +145,30 @@ def main():
                 reader = csv.reader(f, delimiter=',')
                 next(reader) # header
                 for row in reader:
-                    if len(row) < 3: continue
-                    persona_id = row[1].strip() # Index 1: ID_PERSONA o NUMERO_IDENTIFICACION_AFILIADO
+                    if len(row) < 4: continue
+                    persona_id = row[1].strip() # Index 1: ID_PERSONA
                     fecha = row[0].strip() # Index 0: FECHA
+                    
                     if persona_id and fecha:
-                        # Normalizar ID: agregar CC si no lo tiene
+                        # Normalizar ID
                         if not persona_id.startswith('CC'):
                             persona_id = f"CC{persona_id}"
                         
                         year = fecha[:4]
                         if year in ["2024", "2025"]:
-                            consumidores[persona_id][ue].add(year)
+                            # Extraer detalle según UE
+                            detail = "General"
+                            try:
+                                if ue == "VIVIENDA": detail = row[4].strip() # NOMBRE_PROYECTO
+                                elif ue == "HOTELES": detail = row[4].strip() # RESORT
+                                elif ue == "PISCILAGO": detail = row[3].strip() # CANAL
+                                elif ue == "RYD": detail = row[7].strip() # CATEGORIA_2
+                            except IndexError:
+                                pass
+                                
+                            if detail:
+                                consumidores[persona_id][ue][year].add(detail)
+
         except Exception as e:
             print(f"Error en {ue}: {e}")
 
@@ -169,7 +182,8 @@ def main():
         "Edades": defaultdict(int),
         "Salarios": defaultdict(int),
         "Categorias": defaultdict(int),
-        "Consumos": defaultdict(lambda: defaultdict(int)) # [UE][Year_Segment]
+        "Consumos": defaultdict(lambda: defaultdict(int)), # [UE][Year_Segment]
+        "DetallesUE": defaultdict(lambda: defaultdict(lambda: defaultdict(int))) # [UE][Year][Detail]
     })
 
     # Benchmarks
@@ -287,10 +301,15 @@ def main():
                 # Cruce de Consumos
                 pers_cons = consumidores.get(persona_id)
                 if pers_cons:
-                    for ue, years in pers_cons.items():
-                        for yr in years:
+                    for ue, year_data in pers_cons.items():
+                        for yr, details in year_data.items():
                             key = f"{yr}_{seg}"
                             target["Consumos"][ue][key] += 1
+                            
+                            # Agregar detalles tácticos
+                            for d in details:
+                                target["DetallesUE"][ue][yr][d] += 1
+                            
                             for g in groups:
                                 benchmarks[g]["Consumos"][ue][key] += 1
 
@@ -326,7 +345,8 @@ def main():
             "Edades": dict(data["Edades"]),
             "Salarios": dict(data["Salarios"]),
             "Categorias": dict(data["Categorias"]),
-            "Consumos": {ue: dict(cons) for ue, cons in data["Consumos"].items()}
+            "Consumos": {ue: dict(cons) for ue, cons in data["Consumos"].items()},
+            "DetallesUE": {ue: {yr: dict(cat) for yr, cat in yrs.items()} for ue, yrs in data["DetallesUE"].items()}
         }
     
     benchmarks_clean = {}
