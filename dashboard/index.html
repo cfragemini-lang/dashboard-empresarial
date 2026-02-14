@@ -91,15 +91,90 @@
             color: var(--text-main);
             line-height: 1.5;
             transition: background-color 0.3s ease, color 0.3s ease;
+            overflow-x: hidden;
+            /* Prevent horizontal scroll */
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 4px;
+            border: 2px solid transparent;
+            background-clip: content-box;
+            transition: background 0.3s;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background-color: var(--text-muted);
         }
 
         header {
-            background: var(--gradient);
-            padding: 1.5rem;
+            background: linear-gradient(135deg, #0033a0 0%, #001e60 100%);
+            padding: 1rem 2rem;
             color: white;
             text-align: center;
-            box-shadow: var(--shadow);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
             position: relative;
+            z-index: 10;
+        }
+
+        /* Metric Cards Polish */
+        .metric-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.2rem;
+            text-align: left;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px -5px rgba(0, 0, 0, 0.1);
+            border-color: var(--secondary);
+        }
+
+        .metric-icon-bg {
+            position: absolute;
+            right: -10px;
+            bottom: -10px;
+            font-size: 4rem;
+            opacity: 0.05;
+            transform: rotate(-15deg);
+            pointer-events: none;
+            transition: all 0.3s ease;
+        }
+
+        .metric-card:hover .metric-icon-bg {
+            opacity: 0.1;
+            transform: rotate(0deg) scale(1.1);
+        }
+
+        .search-section input {
+            box-shadow: 0 8px 20px -5px rgba(0, 0, 0, 0.1);
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .search-section input:focus {
+            box-shadow: 0 0 0 4px rgba(0, 161, 228, 0.15);
+            border-color: var(--secondary);
+            transform: translateY(-2px);
         }
 
         /* Dark Mode Toggle */
@@ -427,15 +502,16 @@
             border-radius: 0.5rem;
             background: var(--bg);
             border: 1px solid transparent;
-            transition: all 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             cursor: pointer;
         }
 
         .metric-card:hover {
             border-color: var(--secondary);
             background: var(--card-bg);
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
-            transform: translateY(-4px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+            transform: translateY(-6px);
+            z-index: 10;
         }
 
         .metric-card .value {
@@ -565,9 +641,9 @@
         }
 
         .segment-card:hover {
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-            transform: translateY(-5px);
             border-color: var(--secondary);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+            transform: translateY(-5px);
         }
 
         .segment-card h3 {
@@ -830,97 +906,164 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            background: linear-gradient(135deg, #0f172a 0%, #020617 100%);
             display: flex;
             justify-content: center;
             align-items: center;
             z-index: 10000;
-            color: white;
-            font-family: 'Inter', sans-serif;
+            overflow: hidden;
+        }
+
+        #login-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
         }
 
         .login-card {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(12px);
-            padding: 2.5rem;
-            border-radius: 2rem;
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            width: 100%;
-            max-width: 400px;
-            text-align: center;
+            padding: 3rem;
+            border-radius: 1.5rem;
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-            animation: fadeInScale 0.4s ease-out;
+            text-align: center;
+            max-width: 420px;
+            width: 90%;
+            z-index: 2;
+            position: relative;
+            transform: translateY(0);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            animation: cardFloat 6s ease-in-out infinite;
         }
 
-        @keyframes fadeInScale {
-            from {
-                opacity: 0;
-                transform: scale(0.95);
+        @keyframes cardFloat {
+
+            0%,
+            100% {
+                transform: translateY(0);
             }
 
-            to {
-                opacity: 1;
-                transform: scale(1);
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .login-card:hover {
+            box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.6);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .login-logo {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 1.5rem;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            box-shadow: 0 10px 25px -5px rgba(59, 130, 246, 0.5);
+            animation: logoPulse 3s infinite;
+        }
+
+        @keyframes logoPulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.4);
+            }
+
+            70% {
+                box-shadow: 0 0 0 20px rgba(59, 130, 246, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(59, 130, 246, 0);
             }
         }
 
         .login-card h1 {
-            font-size: 1.6rem;
-            margin-bottom: 0.5rem;
+            color: #f8fafc;
+            font-size: 1.8rem;
             font-weight: 800;
-            letter-spacing: -0.025em;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.5px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
         }
 
         .login-card p {
             color: #94a3b8;
-            font-size: 0.875rem;
-            margin-bottom: 2rem;
+            margin-bottom: 2.5rem;
+            font-size: 0.95rem;
+            font-weight: 400;
             line-height: 1.5;
         }
 
         .login-input {
             width: 100%;
-            padding: 1rem;
-            background: rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 1rem;
+            padding: 1rem 1.2rem;
+            background: rgba(15, 23, 42, 0.6);
+            border: 2px solid rgba(51, 65, 85, 0.5);
+            border-radius: 0.75rem;
             color: white;
             font-size: 1rem;
-            margin-bottom: 1rem;
+            transition: all 0.3s ease;
             outline: none;
-            transition: all 0.3s;
-            text-align: center;
-            letter-spacing: 0.1em;
+            margin-bottom: 1.5rem;
+            font-family: inherit;
         }
 
         .login-input:focus {
-            border-color: #3b82f6;
-            background: rgba(0, 0, 0, 0.4);
-            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
+            background: rgba(15, 23, 42, 0.8);
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+            transform: scale(1.02);
+        }
+
+        .login-input::placeholder {
+            color: #64748b;
         }
 
         .login-button {
             width: 100%;
             padding: 1rem;
-            background: #2563eb;
+            background: linear-gradient(135deg, var(--primary) 0%, #001e60 100%);
             color: white;
             border: none;
-            border-radius: 1rem;
-            font-weight: 700;
+            border-radius: 0.75rem;
             font-size: 1rem;
+            font-weight: 700;
             cursor: pointer;
-            transition: all 0.3s;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .login-button::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.5s;
         }
 
         .login-button:hover {
-            background: #1d4ed8;
-            transform: translateY(-1px);
-            box-shadow: 0 10px 15px -3px rgba(37, 99, 235, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(59, 130, 246, 0.4);
         }
 
-        .login-button:active {
-            transform: translateY(0);
+        .login-button:hover::after {
+            left: 100%;
         }
 
         .login-error {
@@ -932,6 +1075,35 @@
             padding: 0.5rem;
             background: rgba(239, 68, 68, 0.1);
             border-radius: 0.5rem;
+            border: 1px solid rgba(239, 68, 68, 0.2);
+        }
+
+        .shake {
+            animation: shake 0.5s cubic-bezier(.36, .07, .19, .97) both;
+        }
+
+        @keyframes shake {
+
+            10%,
+            90% {
+                transform: translate3d(-1px, 0, 0);
+            }
+
+            20%,
+            80% {
+                transform: translate3d(2px, 0, 0);
+            }
+
+            30%,
+            50%,
+            70% {
+                transform: translate3d(-4px, 0, 0);
+            }
+
+            40%,
+            60% {
+                transform: translate3d(4px, 0, 0);
+            }
         }
 
         .locked {
@@ -943,21 +1115,103 @@
                 transform: rotate(360deg);
             }
         }
+
+        /* ==================== UX ENHANCEMENTS ==================== */
+
+        /* 1. Skeleton Loading */
+        .skeleton {
+            background: linear-gradient(90deg, var(--border) 25%, var(--bg) 50%, var(--border) 75%);
+            background-size: 200% 100%;
+            animation: skeleton-loading 1.5s infinite;
+            border-radius: 4px;
+            color: transparent !important;
+            user-select: none;
+        }
+
+        .skeleton * {
+            visibility: hidden;
+        }
+
+        @keyframes skeleton-loading {
+            0% {
+                background-position: 200% 0;
+            }
+
+            100% {
+                background-position: -200% 0;
+            }
+        }
+
+        /* 2. Micro-interactions: Hover Lift */
+        .hover-lift {
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
+        }
+
+        .hover-lift:hover {
+            transform: translateY(-5px) scale(1.01);
+            box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.15);
+            z-index: 10;
+        }
+
+        /* 3. Smooth Transitions */
+        .view-content {
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 0.4s ease, transform 0.4s ease;
+            display: none;
+            /* Controlled by JS but good default */
+        }
+
+        .view-content.active-view {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* 4. Ripple Effect for Buttons */
+        .ripple-btn {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .ripple {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            transform: scale(0);
+            animation: ripple-anim 0.6s linear;
+            pointer-events: none;
+        }
+
+        @keyframes ripple-anim {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
     </style>
 </head>
 
 <body>
     <!-- Pantalla de Login -->
+    <!-- Pantalla de Login -->
     <div id="login-screen">
+        <canvas id="login-canvas"></canvas>
         <div class="login-card">
             <div style="margin-bottom: 2rem;">
                 <img src="logo.png" alt="Colsubsidio Logo"
-                    style="width: 220px; filter: drop-shadow(0 0 10px rgba(255,255,255,0.2));">
+                    style="width: 200px; filter: brightness(0) invert(1) drop-shadow(0 0 10px rgba(255,255,255,0.5));">
             </div>
             <h1>Dashboard Corporativo</h1>
-            <p>Acceso restringido. Por favor ingresa la clave de seguridad para continuar.</p>
-            <input type="password" id="password-input" class="login-input" placeholder="••••••••" autofocus>
-            <button onclick="checkPassword()" class="login-button">Ver Dashboard</button>
+            <p class="login-subtitle">Acceso seguro a Ficha Técnica Empresarial</p>
+
+            <div class="input-group">
+                <input type="password" id="password-input" class="login-input" placeholder="••••••••" autofocus>
+            </div>
+
+            <button onclick="checkPassword()" class="login-button">
+                <span>Acceder al Sistema</span>
+            </button>
             <div id="login-error" class="login-error">🔑 Clave incorrecta. Reintenta.</div>
         </div>
     </div>
@@ -974,12 +1228,17 @@
     </header>
 
     <div id="loading">Cargando datos...</div>
+    <div id="skeleton-layer" class="container hidden" style="opacity: 0; transition: opacity 0.3s;">
+        <!-- Skeleton structure will be injected here -->
+    </div>
 
     <div class="container locked" id="main-content">
         <!-- Navegación Principal -->
         <div class="nav-tabs">
-            <div class="nav-tab active" data-view="ficha" onclick="switchView('ficha')">🪪 Ficha Técnica</div>
-            <div class="nav-tab" data-view="comparator" onclick="switchView('comparator')">⚖️ Comparador Benchmarking
+            <div class="nav-tab ripple-btn active" data-view="ficha" onclick="switchView('ficha')">🪪 Ficha Técnica
+            </div>
+            <div class="nav-tab ripple-btn" data-view="comparator" onclick="switchView('comparator')">⚖️ Comparador
+                Benchmarking
             </div>
         </div>
 
@@ -1391,11 +1650,39 @@
 
                         if (decrypted) {
                             datosFichaCompleta = decrypted;
-                            // Eliminamos setItem para que nunca se guarde la sesión
-                            unlockDashboard();
+
+                            // 1. Fade out Login
+                            const loginScreen = document.getElementById('login-screen');
+                            loginScreen.style.opacity = '0';
+                            loginScreen.style.transition = 'opacity 0.5s ease';
+
+                            setTimeout(() => {
+                                loginScreen.style.display = 'none';
+
+                                // 2. Show Skeleton immediately
+                                showSkeleton();
+
+                                // 3. Simulate processing delay (UX)
+                                setTimeout(() => {
+                                    populateCompanyList();
+                                    setupEventListeners();
+
+                                    // 4. Hide Skeleton & Show Main
+                                    hideSkeleton();
+
+                                    const mainContent = document.getElementById('main-content');
+                                    mainContent.classList.remove('locked');
+                                    mainContent.style.opacity = '0';
+                                    mainContent.style.animation = 'fadeInUp 0.6s ease-out forwards';
+
+                                }, 1500); // 1.5s de "carga" premium
+                            }, 500);
+
                         } else {
                             throw new Error("Clave válida pero error al descifrar. ¿Archivo corrupto?");
                         }
+
+
                     } else {
                         throw new Error("🔑 Clave incorrecta. Reintenta.");
                     }
@@ -1466,6 +1753,103 @@
                 text.textContent = 'Modo Oscuro';
             }
         }
+
+        // ==================== UX ENHANCEMENTS LOGIC ====================
+        function showSkeleton() {
+            const layer = document.getElementById('skeleton-layer');
+            if (!layer) return;
+
+            layer.innerHTML = `
+                <!-- Nav Skeleton -->
+                <div style="display: flex; gap: 1rem; margin-bottom: 1.5rem;">
+                    <div class="skeleton" style="height: 40px; width: 150px;"></div>
+                    <div class="skeleton" style="height: 40px; width: 220px;"></div>
+                </div>
+
+                <!-- Search Skeleton -->
+                <div class="skeleton" style="height: 60px; margin-bottom: 1.5rem; border-radius: 0.75rem;"></div>
+
+                <!-- Profile Skeleton -->
+                <!-- Company Header -->
+                <div style="margin-bottom: 2rem;">
+                    <div class="skeleton" style="height: 80px; margin-bottom: 1rem;"></div>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 0.75rem;">
+                        <div class="skeleton" style="height: 100px;"></div>
+                        <div class="skeleton" style="height: 100px;"></div>
+                        <div class="skeleton" style="height: 100px;"></div>
+                        <div class="skeleton" style="height: 100px;"></div>
+                    </div>
+                </div>
+            `;
+            layer.classList.remove('hidden');
+            // Force redraw
+            void layer.offsetWidth;
+            layer.style.opacity = '1';
+        }
+
+        function hideSkeleton() {
+            const layer = document.getElementById('skeleton-layer');
+            if (!layer) return;
+            layer.style.opacity = '0';
+            setTimeout(() => {
+                layer.classList.add('hidden');
+            }, 300);
+        }
+
+
+        function switchView(viewName) {
+            document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+            document.querySelector(`.nav-tab[data-view="${viewName}"]`).classList.add('active');
+
+            const mainView = document.getElementById('view-main');
+            const compView = document.getElementById('view-comparator');
+
+            if (viewName === 'ficha') {
+                compView.style.opacity = '0';
+                compView.style.transform = 'translateY(10px)';
+                setTimeout(() => {
+                    compView.classList.add('hidden');
+                    mainView.classList.remove('hidden');
+                    // Trigger reflow
+                    void mainView.offsetWidth;
+                    mainView.style.opacity = '1';
+                    mainView.style.transform = 'translateY(0)';
+                }, 300);
+            } else {
+                mainView.style.opacity = '0';
+                mainView.style.transform = 'translateY(10px)';
+                setTimeout(() => {
+                    mainView.classList.add('hidden');
+                    compView.classList.remove('hidden');
+                    // Trigger reflow
+                    void compView.offsetWidth;
+                    compView.style.opacity = '1';
+                    compView.style.transform = 'translateY(0)';
+
+                    // Update company 1 name
+                    if (CURRENT_COMPANY) {
+                        document.getElementById('comp-name-1').textContent = CURRENT_COMPANY;
+                    }
+                    renderComparator();
+                }, 300);
+            }
+        }
+
+        // Add Ripple Effect
+        document.addEventListener('click', function (e) {
+            if (e.target.classList.contains('ripple-btn') || e.target.closest('.ripple-btn')) {
+                const btn = e.target.classList.contains('ripple-btn') ? e.target : e.target.closest('.ripple-btn');
+                const ripple = document.createElement('span');
+                ripple.classList.add('ripple');
+                const rect = btn.getBoundingClientRect();
+                const size = Math.max(rect.width, rect.height);
+                ripple.style.width = ripple.style.height = `${size}px`;
+                ripple.style.left = `${e.clientX - rect.left - size / 2}px`;
+                ripple.style.top = `${e.clientY - rect.top - size / 2}px`;
+                btn.appendChild(ripple);
+                setTimeout(() => ripple.remove(), 600);
+            }
+        });
 
         // ==================== ANIMATIONS ====================
         function animateNumber(element, start, end, duration = 1000) {
@@ -1623,11 +2007,11 @@
                         </div>
                         
                         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem;">
-                            <div class="metric-card">
+                            <div class="metric-card hover-lift">
                                 <div class="value">${formatNumber(total1)}</div>
                                 <div class="label">AFILIADOS TOTALES</div>
                             </div>
-                            <div class="metric-card">
+                            <div class="metric-card hover-lift">
                                 <div class="value">$${formatNumber(sal1 * smlvValue)}</div>
                                 <div class="label">SALARIO PROMEDIO</div>
                             </div>
@@ -1701,7 +2085,7 @@
                 .slice(0, 5);
 
             return `
-                <div class="extended-metric-card" style="margin-bottom: 1.5rem; ${isRight ? 'border-left-color: var(--secondary);' : ''}">
+                <div class="extended-metric-card hover-lift" style="margin-bottom: 1.5rem; ${isRight ? 'border-left-color: var(--secondary);' : ''}">
                     <h4 style="border-bottom: 1px solid var(--border); padding-bottom: 0.5rem; margin-bottom: 1rem;">
                         ${field === 'Salarios' ? '💰 Niveles Salariales' :
                     field === 'Edades' ? '👥 Rangos de Edad' :
@@ -2074,13 +2458,15 @@
                 .slice(0, 4);
 
             metricsDiv.innerHTML = `
-                <div class="metric-card">
+                <div class="metric-card hover-lift">
+                    <div class="metric-icon-bg">👥</div>
                     <div class="value">${formatNumber(totalAfiliados)}</div>
                     <div class="label">TOTAL AFILIADOS</div>
                     ${getGlobalBenchmarkComparisonHTML(totalAfiliados, "Total", null, true, "afiliados")}
                 </div>
                 
-                <div class="metric-card" style="min-width: 170px;">
+                <div class="metric-card hover-lift" style="min-width: 170px;">
+                    <div class="metric-icon-bg">💳</div>
                     <div class="value">$${formatNumber(avgSalaryEmp * smlvValue)}</div>
                     <div class="percentage">${formatNumber(avgSalaryEmp, 1)} SMMLV</div>
                     <div class="label">SALARIO PROMEDIO</div>
@@ -2089,8 +2475,15 @@
 
                 ${topSegmentos.map(([segName, count], idx) => {
                 const percentage = totalAfiliados > 0 ? ((count / totalAfiliados) * 100) : 0;
+                let icon = '📊';
+                if (segName === 'Básico') icon = '🥉';
+                if (segName === 'Medio') icon = '🥈';
+                if (segName === 'Joven') icon = '🚀';
+                if (segName === 'Alto') icon = '💎';
+
                 return `
-                        <div class="metric-card" style="min-width: 160px;">
+                        <div class="metric-card hover-lift" style="min-width: 160px;">
+                            <div class="metric-icon-bg">${icon}</div>
                             <div class="value">${formatNumber(count)}</div>
                             <div class="percentage">${formatPercent(percentage)}</div>
                             <div class="label">${segName}</div>
@@ -2598,6 +2991,89 @@
         function renderComparisonChart() {
             // removida
         }
+    </script>
+
+    <script>
+        // ==================== PARTICLE NETWORK ANIMATION ====================
+        const canvas = document.getElementById('login-canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.vx = (Math.random() - 0.5) * 1.5;
+                this.vy = (Math.random() - 0.5) * 1.5;
+                this.size = Math.random() * 2 + 1;
+                this.color = `rgba(0, 161, 228, ${Math.random() * 0.5 + 0.2})`; // Cyan/Blue
+            }
+
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+
+                if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+                if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+            }
+
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fillStyle = this.color;
+                ctx.fill();
+            }
+        }
+
+        function initParticles() {
+            particles = [];
+            for (let i = 0; i < 80; i++) {
+                particles.push(new Particle());
+            }
+        }
+
+        function animateParticles() {
+            if (document.getElementById('login-screen').style.display === 'none') return; // Stop if hidden
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Draw connections
+            for (let i = 0; i < particles.length; i++) {
+                for (let j = i; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+
+                    if (distance < 120) {
+                        ctx.beginPath();
+                        ctx.strokeStyle = `rgba(0, 161, 228, ${1 - distance / 120})`;
+                        ctx.lineWidth = 0.5;
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+
+            // Update and draw particles
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+
+            requestAnimationFrame(animateParticles);
+        }
+
+        initParticles();
+        animateParticles();
     </script>
 </body>
 
