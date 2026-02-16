@@ -2858,7 +2858,7 @@
             text = `Tu cobertura en ${ueName} es de <strong>${empCov.toFixed(1)}%</strong>. `;
 
             if (surpassedBenchmarks === 3) {
-                text += `<strong>¡Felicidades!</strong> Eres líder absoluto, superando los tres benchmarks de mercado (Sector: ${bCl.toFixed(1)}%, Foco: ${bFo.toFixed(1)}%, Grandes: ${bGr.toFixed(1)}%). `;
+                text += `Superas los tres benchmarks de mercado (Sector: ${bCl.toFixed(1)}%, Foco: ${bFo.toFixed(1)}%, Grandes: ${bGr.toFixed(1)}%). `;
                 const surplusSector = empRealCount - metaSector;
                 text += `Actualmente operas con un excedente de <strong>${surplusSector.toLocaleString()} consumos</strong> sobre el promedio de tu Sector.`;
             } else if (surpassedBenchmarks === 0) {
